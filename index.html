@@ -2,275 +2,236 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Genius Academy – ZÉRO → HÉROS</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Nunito&display=swap" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Nunito&display=swap');
-
-    body {
-      font-family: 'Nunito', sans-serif;
-      background: linear-gradient(135deg, #001f3f 0%, #004080 100%);
-      color: #e0e7ff;
-      min-height: 100vh;
-      margin: 0;
-      overflow-x: hidden;
+    :root {
+      --blue-dark: #0a192f;
+      --blue-accent: #00ffff;
+      --neon-green: #39ff14;
+      --text-light: #e0f7fa;
     }
-
+    body {
+      margin: 0;
+      font-family: 'Nunito', sans-serif;
+      background: var(--blue-dark);
+      color: var(--text-light);
+      scroll-behavior: smooth;
+    }
     header.hero {
+      background: linear-gradient(135deg, var(--blue-dark), #002b50);
       text-align: center;
-      padding: 5rem 1rem 6rem;
+      padding: 5rem 1rem;
       position: relative;
       overflow: hidden;
     }
-
-    header.hero::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle at center, #0ff 0%, transparent 70%);
-      opacity: 0.15;
-      animation: pulse 8s ease-in-out infinite;
-      z-index: 0;
-      filter: blur(80px);
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 0.15; }
-      50% { transform: scale(1.2); opacity: 0.3; }
-    }
-
     header.hero h1 {
       font-family: 'Montserrat', sans-serif;
-      font-size: 3.8rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-      color: #00ffff;
-      position: relative;
-      z-index: 1;
-      opacity: 0;
-      animation: fadeInUp 1s forwards 0.5s;
+      font-size: 4rem;
+      color: var(--blue-accent);
+      animation: fadeInUp 1s ease forwards;
     }
-
     header.hero p.lead {
-      font-size: 1.4rem;
-      color: #c0e8ff;
-      position: relative;
-      z-index: 1;
-      opacity: 0;
-      animation: fadeInUp 1s forwards 1.2s;
+      color: #a0dfff;
+      font-size: 1.5rem;
+      animation: fadeInUp 1s ease forwards;
+      animation-delay: 0.5s;
     }
-
+    .packs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    .pack-card {
+      background-color: #031b3b;
+      border-left: 5px solid var(--neon-green);
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+    .pack-card:hover {
+      transform: translateY(-8px);
+    }
+    .pack-card h4 {
+      font-family: 'Montserrat', sans-serif;
+      color: var(--blue-accent);
+    }
+    .btn-neon {
+      background-color: transparent;
+      color: var(--neon-green);
+      border: 2px solid var(--neon-green);
+      border-radius: 5px;
+      padding: 0.5rem 1rem;
+      transition: background-color 0.3s ease;
+    }
+    .btn-neon:hover {
+      background-color: var(--neon-green);
+      color: #000;
+    }
+    footer {
+      background-color: #001524;
+      color: var(--blue-accent);
+      text-align: center;
+      padding: 2rem;
+      margin-top: 4rem;
+    }
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
-
-    main.container {
-      max-width: 960px;
-      margin-top: -4rem;
-      background: rgba(0, 0, 30, 0.8);
-      padding: 3rem 2rem 4rem;
-      border-radius: 15px;
-      box-shadow: 0 0 40px #00ffffaa;
-      color: #dcefff;
-      overflow: hidden;
-    }
-
-    section.pack {
-      margin-bottom: 3rem;
-      background: rgba(0, 70, 120, 0.3);
-      border-left: 8px solid #00ffff;
-      padding: 1.5rem 2rem;
-      border-radius: 8px;
-      box-shadow: 0 0 10px #00ffff55;
-      opacity: 0;
-      transform: translateY(30px);
-      animation: fadeInUp 0.8s forwards;
-    }
-
-    section.pack:nth-child(1) { animation-delay: 0.3s; }
-    section.pack:nth-child(2) { animation-delay: 0.6s; }
-    section.pack:nth-child(3) { animation-delay: 0.9s; }
-    section.pack:nth-child(4) { animation-delay: 1.2s; }
-    section.pack:nth-child(5) { animation-delay: 1.5s; }
-    section.pack:nth-child(6) { animation-delay: 1.8s; border-color: gold; }
-
-    section.pack h3 {
-      font-family: 'Montserrat', sans-serif;
-      color: #00ffff;
-      margin-bottom: 0.4rem;
-      display: flex;
+    .popup-pack {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: rgba(0,0,0,0.9);
+      color: white;
+      display: none;
       align-items: center;
-      gap: 0.6rem;
-      font-weight: 700;
+      justify-content: center;
+      padding: 2rem;
+      z-index: 1000;
     }
-
-    section.pack p {
-      font-style: italic;
-      margin-bottom: 0.8rem;
-      color: #a0dfff;
+    .popup-pack.active {
+      display: flex;
     }
-
-    section.pack ul {
-      list-style: none;
-      padding-left: 1.2rem;
-      color: #d0e8ff;
-    }
-
-    section.pack ul li::before {
-      content: '✓';
-      margin-right: 0.6rem;
-      color: #00ffff;
-      font-weight: bold;
-    }
-
-    footer.footer {
-      background-color: #001f3f;
-      color: #008080;
-      text-align: center;
-      padding: 1.5rem 1rem;
-      font-style: italic;
-      font-weight: 600;
-      letter-spacing: 1.2px;
-      user-select: none;
-    }
-
-    /* Floating icons next to titles */
-    section.pack h3::before {
-      font-size: 1.6rem;
-    }
-
-    /* Form section styling */
-    section#contact {
-      background: rgba(0, 150, 200, 0.25);
+    .popup-content {
+      max-width: 700px;
+      background-color: #002b50;
       padding: 2rem;
       border-radius: 12px;
-      box-shadow: 0 0 25px #00ffff77;
-      margin-top: 3rem;
-    }
-
-    section#contact h3 {
-      color: #00ffff;
-      margin-bottom: 1.5rem;
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 700;
-      text-align: center;
-    }
-
-    /* Responsive iframe */
-    .iframe-container {
       position: relative;
-      width: 100%;
-      padding-bottom: 56.25%; /* 16:9 ratio */
-      height: 0;
-      overflow: hidden;
-      border-radius: 10px;
-      box-shadow: 0 0 30px #00ffff99;
     }
-    .iframe-container iframe {
+    .popup-content h2 {
+      color: var(--neon-green);
+    }
+    .popup-content .close-btn {
       position: absolute;
-      top:0; left:0; width:100%; height:100%;
+      top: 1rem;
+      right: 1rem;
+      background: transparent;
       border: none;
-      border-radius: 10px;
-      background: #f0f8ffdd;
-      box-shadow: inset 0 0 10px #00ffff88;
+      color: var(--neon-green);
+      font-size: 1.5rem;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-
   <header class="hero">
     <h1>Genius Academy</h1>
-    <p class="lead">Passe de novice à génie du numérique avec notre programme <strong>ZÉRO → HÉROS</strong></p>
+    <p class="lead">Passe de novice à génie du numérique</p>
   </header>
 
-  <main class="container" role="main" aria-label="Présentation des packs Genius Academy">
-    <section class="pack" tabindex="0">
-      <h3>🟢 Pack 0 – Alpha Numérique</h3>
-      <p><em>🖥️ "Maîtrise ton ordinateur. Dompte Internet. Entre dans l’ère numérique."</em></p>
-      <ul>
-        <li>Utilisation de l’ordinateur (clavier, souris, fichiers)</li>
-        <li>Navigation Internet & recherches efficaces</li>
-        <li>Word, PowerPoint, Excel</li>
-      </ul>
-    </section>
+  <main class="container py-5">
+    <div class="text-center mb-4">
+      <h2>Nos Packs de Formation</h2>
+    </div>
+    <div class="packs-grid">
+      <div class="pack-card" onclick="openPopup(0)">
+        <h4>🟢 Pack 0 – Alpha Numérique</h4>
+        <p>Maîtrise ton ordinateur et Internet</p>
+      </div>
+      <div class="pack-card" onclick="openPopup(1)">
+        <h4>🔵 Pack 2 – Python First Blood</h4>
+        <p>Découvre la programmation Python</p>
+      </div>
+      <div class="pack-card" onclick="openPopup(2)">
+        <h4>🔷 Pack 3 – Science & Code</h4>
+        <p>Modélise les sciences avec du code</p>
+      </div>
+      <div class="pack-card" onclick="openPopup(3)">
+        <h4>🌐 Pack 4 – Digital Creator</h4>
+        <p>Crée ton site web personnel</p>
+      </div>
+      <div class="pack-card" onclick="openPopup(4)">
+        <h4>🤖 Pack 5 – Smart Dev Tools</h4>
+        <p>Automatise, optimise et crée des outils</p>
+      </div>
+      <div class="pack-card" onclick="openPopup(5)">
+        <h4>🌟 Formule PREMIUM</h4>
+        <p>Le parcours ZÉRO → HÉROS complet</p>
+      </div>
+    </div>
+    <div class="text-center mt-5">
+      <a href="#inscription" class="btn btn-neon">Je m'inscris maintenant</a>
+    </div>
 
-    <section class="pack" tabindex="0">
-      <h3>🔵 Pack 2 – Python First Blood</h3>
-      <p><em>🐍 "Ton premier programme Python t’attend. Écris-le, exécute-le, comprends-le."</em></p>
-      <ul>
-        <li>Introduction à la logique informatique</li>
-        <li>Variables, conditions, boucles, fonctions</li>
-        <li>Projets pratiques : convertisseurs, mini-jeux...</li>
-      </ul>
-    </section>
-
-    <section class="pack" tabindex="0">
-      <h3>🔷 Pack 3 – Science & Code</h3>
-      <p><em>🔬 "Utilise le code pour modéliser la science que tu étudies."</em></p>
-      <ul>
-        <li>Rappels mathématiques, matplotlib, numpy, sympy</li>
-        <li>Visualisations et simulations scientifiques</li>
-        <li>Problèmes scientifiques résolus par code</li>
-      </ul>
-    </section>
-
-    <section class="pack" tabindex="0">
-      <h3>🌐 Pack 4 – Digital Creator</h3>
-      <p><em>🌐 "Crée ton site. Partage tes idées. Exprime ton potentiel."</em></p>
-      <ul>
-        <li>HTML, CSS, Bootstrap</li>
-        <li>Structure de site web personnel</li>
-        <li>Design responsive, GitHub Pages</li>
-      </ul>
-    </section>
-
-    <section class="pack" tabindex="0">
-      <h3>🤖 Pack 5 – Smart Dev Tools</h3>
-      <p><em>🤖 "Automatise. Rends ton PC plus intelligent. Gagne du temps."</em></p>
-      <ul>
-        <li>Scripts Python pour automatisation</li>
-        <li>Web scraping, IA simple, GhostControl</li>
-        <li>Outils pratiques personnalisés</li>
-      </ul>
-    </section>
-
-    <section class="pack border-warning" tabindex="0" style="border-color: gold;">
-      <h3>🌟 Formule PREMIUM – ZÉRO → HÉROS</h3>
-      <p><em>🔥 "Passe de novice à génie du numérique. Le parcours ultime."</em></p>
-      <ul>
-        <li>Accès à tous les packs 0 → 5</li>
-        <li>Suivi individuel + hackathon final</li>
-        <li>Portfolio GitHub, communauté Discord, certificat Digital Hero</li>
-      </ul>
-    </section>
-
-    <section id="contact" aria-label="Formulaire de contact et inscription" tabindex="0">
-      <h3>Contactez-nous / Inscrivez-vous</h3>
-      <div class="iframe-container">
-        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdD5zGpLkJt20O2x6RbzNlS1xB4w7q5jx3M-E4qKlE3h9X6qA/viewform?embedded=true" 
-          title="Formulaire Google Forms d'inscription Genius Academy" 
-          allowfullscreen></iframe>
+    <section id="inscription" class="mt-5">
+      <h3 class="text-center">Formulaire d'inscription</h3>
+      <div class="ratio ratio-16x9">
+        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdD5zGpLkJt20O2x6RbzNlS1xB4w7q5jx3M-E4qKlE3h9X6qA/viewform?embedded=true" frameborder="0">Chargement…</iframe>
       </div>
     </section>
   </main>
 
-  <footer class="footer">
-    &copy; 2025 Genius Academy – Tous droits réservés
+  <footer>
+    <p>&copy; 2025 Genius Academy – Tous droits réservés</p>
+    <small><a href="#" style="color: var(--text-light);">Mentions légales</a></small>
   </footer>
 
-  <script>
-    // Optional: smooth scroll for keyboard focus
-    document.querySelectorAll('section.pack, #contact').forEach(section => {
-      section.addEventListener('focus', e => {
-        section.scrollIntoView({behavior: 'smooth', block: 'center'});
-      });
-    });
-  </script>
+  <div id="popup" class="popup-pack">
+    <div class="popup-content">
+      <button class="close-btn" onclick="closePopup()">&times;</button>
+      <h2 id="popup-title"></h2>
+      <p id="popup-desc"></p>
+      <ul id="popup-list"></ul>
+    </div>
+  </div>
 
+  <script>
+    const packs = [
+      {
+        title: "Pack 0 – Alpha Numérique",
+        desc: "Maîtrise les bases de l'informatique et d'Internet.",
+        items: ["Utilisation de l’ordinateur (clavier, souris, fichiers)", "Navigation Internet efficace", "Rédaction de documents avec Word", "Présentations PowerPoint", "Tableurs Excel / Google Sheets"]
+      },
+      {
+        title: "Pack 2 – Python First Blood",
+        desc: "Découvre les bases de la programmation avec Python.",
+        items: ["Logique informatique", "Variables, boucles, conditions, fonctions", "Exercices corrigés", "Mini-projets: convertisseurs, mini-jeux"]
+      },
+      {
+        title: "Pack 3 – Science & Code",
+        desc: "Utilise le code pour modéliser les sciences.",
+        items: ["Maths utiles (fonctions, équations)", "Matplotlib, numpy, sympy", "Graphiques, simulations (chute libre, radioactivité)"]
+      },
+      {
+        title: "Pack 4 – Digital Creator",
+        desc: "Crée ton site web personnel.",
+        items: ["HTML, CSS, Bootstrap", "Ajout de projets, CV, contact", "Design responsive", "Hébergement GitHub Pages"]
+      },
+      {
+        title: "Pack 5 – Smart Dev Tools",
+        desc: "Automatise et crée des outils pratiques avec Python.",
+        items: ["Scripts utiles", "Web scraping", "Organisation de fichiers", "Bases IA (chatbot)", "Projet GhostControl"]
+      },
+      {
+        title: "Formule PREMIUM – ZÉRO → HÉROS",
+        desc: "Le parcours ultime : tous les packs, suivi, hackathon.",
+        items: ["Tous les packs inclus", "Suivi individuel personnalisé", "Hackathon final + Certificat Digital Hero", "Portfolio GitHub", "Communauté privée"]
+      },
+    ];
+
+    function openPopup(index) {
+      const pack = packs[index];
+      document.getElementById("popup-title").innerText = pack.title;
+      document.getElementById("popup-desc").innerText = pack.desc;
+      const list = document.getElementById("popup-list");
+      list.innerHTML = "";
+      pack.items.forEach(item => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        list.appendChild(li);
+      });
+      document.getElementById("popup").classList.add("active");
+    }
+
+    function closePopup() {
+      document.getElementById("popup").classList.remove("active");
+    }
+  </script>
 </body>
 </html>
