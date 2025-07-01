@@ -2,48 +2,194 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Genius Academy – ZÉRO → HÉROS</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Nunito&display=swap');
+
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f8f9fa;
+      font-family: 'Nunito', sans-serif;
+      background: linear-gradient(135deg, #001f3f 0%, #004080 100%);
+      color: #e0e7ff;
+      min-height: 100vh;
+      margin: 0;
+      overflow-x: hidden;
     }
-    .hero {
-      background: linear-gradient(135deg, #003c74, #0077c8);
-      color: white;
-      padding: 60px 20px;
+
+    header.hero {
       text-align: center;
+      padding: 5rem 1rem 6rem;
+      position: relative;
+      overflow: hidden;
     }
-    .hero h1 {
-      font-size: 3rem;
+
+    header.hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at center, #0ff 0%, transparent 70%);
+      opacity: 0.15;
+      animation: pulse 8s ease-in-out infinite;
+      z-index: 0;
+      filter: blur(80px);
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.15; }
+      50% { transform: scale(1.2); opacity: 0.3; }
+    }
+
+    header.hero h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 3.8rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: #00ffff;
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      animation: fadeInUp 1s forwards 0.5s;
+    }
+
+    header.hero p.lead {
+      font-size: 1.4rem;
+      color: #c0e8ff;
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      animation: fadeInUp 1s forwards 1.2s;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    main.container {
+      max-width: 960px;
+      margin-top: -4rem;
+      background: rgba(0, 0, 30, 0.8);
+      padding: 3rem 2rem 4rem;
+      border-radius: 15px;
+      box-shadow: 0 0 40px #00ffffaa;
+      color: #dcefff;
+      overflow: hidden;
+    }
+
+    section.pack {
+      margin-bottom: 3rem;
+      background: rgba(0, 70, 120, 0.3);
+      border-left: 8px solid #00ffff;
+      padding: 1.5rem 2rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px #00ffff55;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.8s forwards;
+    }
+
+    section.pack:nth-child(1) { animation-delay: 0.3s; }
+    section.pack:nth-child(2) { animation-delay: 0.6s; }
+    section.pack:nth-child(3) { animation-delay: 0.9s; }
+    section.pack:nth-child(4) { animation-delay: 1.2s; }
+    section.pack:nth-child(5) { animation-delay: 1.5s; }
+    section.pack:nth-child(6) { animation-delay: 1.8s; border-color: gold; }
+
+    section.pack h3 {
+      font-family: 'Montserrat', sans-serif;
+      color: #00ffff;
+      margin-bottom: 0.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 700;
+    }
+
+    section.pack p {
+      font-style: italic;
+      margin-bottom: 0.8rem;
+      color: #a0dfff;
+    }
+
+    section.pack ul {
+      list-style: none;
+      padding-left: 1.2rem;
+      color: #d0e8ff;
+    }
+
+    section.pack ul li::before {
+      content: '✓';
+      margin-right: 0.6rem;
+      color: #00ffff;
       font-weight: bold;
     }
-    .pack {
-      border-left: 5px solid #0077c8;
-      padding-left: 15px;
-      margin-bottom: 30px;
-      background-color: #ffffff;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-      padding: 20px;
-    }
-    .footer {
-      background-color: #003c74;
-      color: white;
+
+    footer.footer {
+      background-color: #001f3f;
+      color: #008080;
       text-align: center;
-      padding: 20px 10px;
+      padding: 1.5rem 1rem;
+      font-style: italic;
+      font-weight: 600;
+      letter-spacing: 1.2px;
+      user-select: none;
+    }
+
+    /* Floating icons next to titles */
+    section.pack h3::before {
+      font-size: 1.6rem;
+    }
+
+    /* Form section styling */
+    section#contact {
+      background: rgba(0, 150, 200, 0.25);
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 0 25px #00ffff77;
+      margin-top: 3rem;
+    }
+
+    section#contact h3 {
+      color: #00ffff;
+      margin-bottom: 1.5rem;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    /* Responsive iframe */
+    .iframe-container {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%; /* 16:9 ratio */
+      height: 0;
+      overflow: hidden;
+      border-radius: 10px;
+      box-shadow: 0 0 30px #00ffff99;
+    }
+    .iframe-container iframe {
+      position: absolute;
+      top:0; left:0; width:100%; height:100%;
+      border: none;
+      border-radius: 10px;
+      background: #f0f8ffdd;
+      box-shadow: inset 0 0 10px #00ffff88;
     }
   </style>
 </head>
 <body>
+
   <header class="hero">
     <h1>Genius Academy</h1>
     <p class="lead">Passe de novice à génie du numérique avec notre programme <strong>ZÉRO → HÉROS</strong></p>
   </header>
 
-  <main class="container py-5">
-    <section class="pack">
+  <main class="container" role="main" aria-label="Présentation des packs Genius Academy">
+    <section class="pack" tabindex="0">
       <h3>🟢 Pack 0 – Alpha Numérique</h3>
       <p><em>🖥️ "Maîtrise ton ordinateur. Dompte Internet. Entre dans l’ère numérique."</em></p>
       <ul>
@@ -53,7 +199,7 @@
       </ul>
     </section>
 
-    <section class="pack">
+    <section class="pack" tabindex="0">
       <h3>🔵 Pack 2 – Python First Blood</h3>
       <p><em>🐍 "Ton premier programme Python t’attend. Écris-le, exécute-le, comprends-le."</em></p>
       <ul>
@@ -63,7 +209,7 @@
       </ul>
     </section>
 
-    <section class="pack">
+    <section class="pack" tabindex="0">
       <h3>🔷 Pack 3 – Science & Code</h3>
       <p><em>🔬 "Utilise le code pour modéliser la science que tu étudies."</em></p>
       <ul>
@@ -73,7 +219,7 @@
       </ul>
     </section>
 
-    <section class="pack">
+    <section class="pack" tabindex="0">
       <h3>🌐 Pack 4 – Digital Creator</h3>
       <p><em>🌐 "Crée ton site. Partage tes idées. Exprime ton potentiel."</em></p>
       <ul>
@@ -83,7 +229,7 @@
       </ul>
     </section>
 
-    <section class="pack">
+    <section class="pack" tabindex="0">
       <h3>🤖 Pack 5 – Smart Dev Tools</h3>
       <p><em>🤖 "Automatise. Rends ton PC plus intelligent. Gagne du temps."</em></p>
       <ul>
@@ -93,7 +239,7 @@
       </ul>
     </section>
 
-    <section class="pack border-warning">
+    <section class="pack border-warning" tabindex="0" style="border-color: gold;">
       <h3>🌟 Formule PREMIUM – ZÉRO → HÉROS</h3>
       <p><em>🔥 "Passe de novice à génie du numérique. Le parcours ultime."</em></p>
       <ul>
@@ -102,10 +248,29 @@
         <li>Portfolio GitHub, communauté Discord, certificat Digital Hero</li>
       </ul>
     </section>
+
+    <section id="contact" aria-label="Formulaire de contact et inscription" tabindex="0">
+      <h3>Contactez-nous / Inscrivez-vous</h3>
+      <div class="iframe-container">
+        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdD5zGpLkJt20O2x6RbzNlS1xB4w7q5jx3M-E4qKlE3h9X6qA/viewform?embedded=true" 
+          title="Formulaire Google Forms d'inscription Genius Academy" 
+          allowfullscreen></iframe>
+      </div>
+    </section>
   </main>
 
   <footer class="footer">
-    <p>&copy; 2025 Genius Academy – Tous droits réservés</p>
+    &copy; 2025 Genius Academy – Tous droits réservés
   </footer>
+
+  <script>
+    // Optional: smooth scroll for keyboard focus
+    document.querySelectorAll('section.pack, #contact').forEach(section => {
+      section.addEventListener('focus', e => {
+        section.scrollIntoView({behavior: 'smooth', block: 'center'});
+      });
+    });
+  </script>
+
 </body>
 </html>
