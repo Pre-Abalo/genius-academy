@@ -3,189 +3,586 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Genius Academy – ZÉRO → HÉROS</title>
+  <title>Python Science Academy – Expert Python pour Étudiants en Sciences</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Nunito&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --blue-dark: #0a192f;
-      --blue-accent: #00ffff;
-      --neon-green: #39ff14;
-      --text-light: #e0f7fa;
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --secondary: #ec4899;
+      --accent: #8b5cf6;
+      --success: #10b981;
+      --bg-dark: #0f172a;
+      --bg-card: #1e293b;
+      --text-light: #f1f5f9;
+      --text-muted: #cbd5e1;
+      --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
     }
-    body {
+    
+    * {
       margin: 0;
-      font-family: 'Nunito', sans-serif;
-      background: var(--blue-dark);
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-dark);
       color: var(--text-light);
       scroll-behavior: smooth;
+      overflow-x: hidden;
     }
-    header.hero {
-      background: linear-gradient(135deg, var(--blue-dark), #002b50);
-      text-align: center;
-      padding: 5rem 1rem;
+    
+    /* Hero Section */
+    .hero {
       position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-dark);
       overflow: hidden;
     }
-    header.hero h1 {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 4rem;
-      color: var(--blue-accent);
-      animation: fadeInUp 1s ease forwards;
+    
+    .hero-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.15;
+      background: 
+        radial-gradient(circle at 20% 50%, var(--primary) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, var(--secondary) 0%, transparent 50%),
+        radial-gradient(circle at 40% 20%, var(--accent) 0%, transparent 50%);
+      animation: pulse 8s ease-in-out infinite;
     }
-    header.hero p.lead {
-      color: #a0dfff;
-      font-size: 1.5rem;
-      animation: fadeInUp 1s ease forwards;
-      animation-delay: 0.5s;
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 0.15; }
+      50% { opacity: 0.25; }
     }
-    .packs-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-      margin-top: 3rem;
-    }
-    .pack-card {
-      background-color: #031b3b;
-      border-left: 5px solid var(--neon-green);
-      border-radius: 12px;
-      padding: 1.5rem;
-      transition: transform 0.3s ease;
-      cursor: pointer;
-    }
-    .pack-card:hover {
-      transform: translateY(-8px);
-    }
-    .pack-card h4 {
-      font-family: 'Montserrat', sans-serif;
-      color: var(--blue-accent);
-    }
-    .btn-neon {
-      background-color: transparent;
-      color: var(--neon-green);
-      border: 2px solid var(--neon-green);
-      border-radius: 5px;
-      padding: 0.5rem 1rem;
-      transition: background-color 0.3s ease;
-    }
-    .btn-neon:hover {
-      background-color: var(--neon-green);
-      color: #000;
-    }
-    footer {
-      background-color: #001524;
-      color: var(--blue-accent);
+    
+    .hero-content {
+      position: relative;
+      z-index: 2;
       text-align: center;
       padding: 2rem;
-      margin-top: 4rem;
+      max-width: 1200px;
     }
+    
+    .hero h1 {
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, #667eea, #f093fb, #00f2fe);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: fadeInUp 0.8s ease forwards;
+    }
+    
+    .hero .subtitle {
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      animation: fadeInUp 1s ease forwards;
+      animation-delay: 0.2s;
+      opacity: 0;
+    }
+    
+    .hero .tagline {
+      font-size: clamp(1rem, 2vw, 1.3rem);
+      color: var(--success);
+      font-family: 'JetBrains Mono', monospace;
+      margin-bottom: 3rem;
+      animation: fadeInUp 1s ease forwards;
+      animation-delay: 0.4s;
+      opacity: 0;
+    }
+    
     @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
+    
+    /* Stats Section */
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      margin-top: 3rem;
+      flex-wrap: wrap;
+      animation: fadeInUp 1s ease forwards;
+      animation-delay: 0.6s;
+      opacity: 0;
+    }
+    
+    .stat-item {
+      text-align: center;
+    }
+    
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    
+    .stat-label {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+    }
+    
+    /* Section Styling */
+    section {
+      padding: 5rem 1rem;
+      position: relative;
+    }
+    
+    .section-title {
+      text-align: center;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .section-subtitle {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 1.2rem;
+      margin-bottom: 4rem;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    /* Pack Cards Grid */
+    .packs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .pack-card {
+      background: var(--bg-card);
+      border-radius: 20px;
+      padding: 2rem;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      overflow: hidden;
+    }
+    
+    .pack-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--gradient-1);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      z-index: 0;
+    }
+    
+    .pack-card:nth-child(2)::before { background: var(--gradient-2); }
+    .pack-card:nth-child(3)::before { background: var(--gradient-3); }
+    .pack-card:nth-child(4)::before { background: var(--gradient-1); }
+    .pack-card:nth-child(5)::before { background: var(--gradient-2); }
+    
+    .pack-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 20px 60px rgba(99, 102, 241, 0.4);
+    }
+    
+    .pack-card:hover::before {
+      opacity: 0.15;
+    }
+    
+    .pack-card-content {
+      position: relative;
+      z-index: 1;
+    }
+    
+    .pack-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    
+    .pack-badge {
+      display: inline-block;
+      padding: 0.3rem 0.8rem;
+      background: rgba(99, 102, 241, 0.2);
+      color: var(--primary);
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .pack-card h4 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--text-light);
+    }
+    
+    .pack-card p {
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+    
+    .pack-duration {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--success);
+      font-size: 0.9rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    
+    /* Premium Card */
+    .pack-card.premium {
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+      border: 2px solid var(--primary);
+    }
+    
+    .pack-card.premium .pack-badge {
+      background: var(--gradient-1);
+      color: white;
+    }
+    
+    /* CTA Button */
+    .cta-button {
+      display: inline-block;
+      padding: 1rem 3rem;
+      background: var(--gradient-1);
+      color: white;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+    }
+    
+    .cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(99, 102, 241, 0.6);
+      color: white;
+    }
+    
+    /* Popup */
     .popup-pack {
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background-color: rgba(0,0,0,0.9);
-      color: white;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      backdrop-filter: blur(10px);
       display: none;
       align-items: center;
       justify-content: center;
-      padding: 2rem;
       z-index: 1000;
+      padding: 1rem;
+      opacity: 0;
+      transition: opacity 0.3s ease;
     }
+    
     .popup-pack.active {
       display: flex;
+      opacity: 1;
     }
+    
     .popup-content {
+      background: var(--bg-card);
+      border-radius: 20px;
+      padding: 3rem;
       max-width: 700px;
-      background-color: #002b50;
-      padding: 2rem;
-      border-radius: 12px;
+      width: 100%;
       position: relative;
+      max-height: 90vh;
+      overflow-y: auto;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      animation: scaleIn 0.3s ease forwards;
     }
-    .popup-content h2 {
-      color: var(--neon-green);
+    
+    @keyframes scaleIn {
+      from {
+        transform: scale(0.9);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
     }
-    .popup-content .close-btn {
+    
+    .close-btn {
       position: absolute;
-      top: 1rem;
-      right: 1rem;
-      background: transparent;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: rgba(255, 255, 255, 0.1);
       border: none;
-      color: var(--neon-green);
+      color: var(--text-light);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
       font-size: 1.5rem;
       cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .close-btn:hover {
+      background: var(--primary);
+      transform: rotate(90deg);
+    }
+    
+    .popup-content h2 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+      font-size: 2rem;
+    }
+    
+    .popup-content p {
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    
+    .popup-content ul {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .popup-content ul li {
+      padding: 0.8rem 0;
+      padding-left: 2rem;
+      position: relative;
+      color: var(--text-light);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .popup-content ul li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--primary);
+      font-weight: bold;
+    }
+    
+    /* Footer */
+    footer {
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(10px);
+      padding: 3rem 1rem;
+      text-align: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .social-icons a {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 50%;
+      margin: 0 0.5rem;
+      transition: all 0.3s ease;
+    }
+    
+    .social-icons a:hover {
+      background: var(--primary);
+      transform: translateY(-3px);
+    }
+    
+    /* Iframe Section */
+    .iframe-section {
+      background: var(--bg-card);
+      border-radius: 20px;
+      padding: 3rem;
+      max-width: 900px;
+      margin: 0 auto;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      .stats {
+        gap: 2rem;
+      }
+      
+      .packs-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .popup-content {
+        padding: 2rem;
+      }
     }
   </style>
-</head
+</head>
 <body>
   <header class="hero">
-    <h1>Genius Academy</h1>
-    <p class="lead">Passe de novice à génie du numérique</p>
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <h1>Python Science Academy</h1>
+      <p class="subtitle">Formations Python pour Étudiants en Sciences</p>
+      <p class="tagline">// Expert Python • Modélisation Scientifique • Analyse de Données</p>
+      
+      <div class="stats">
+        <div class="stat-item">
+          <div class="stat-number">15+</div>
+          <div class="stat-label">Ans d'expertise Python</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">100%</div>
+          <div class="stat-label">Orienté Sciences</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">∞</div>
+          <div class="stat-label">Possibilités</div>
+        </div>
+      </div>
+    </div>
   </header>
 
-  <main class="container py-5">
-    <div class="text-center mb-4">
-      <h2>Nos Packs de Formation</h2>
-<h3>Cliquer sur une formation pour voir les détails</h3>
-    </div>
-    <div class="packs-grid">
-      <div class="pack-card" onclick="openPopup(0)">
-        <h4>🟢 Pack 0 – Alpha Numérique</h4>
-        <p>Maîtrise ton ordinateur et Internet</p>
-      </div>
-      <div class="pack-card" onclick="openPopup(1)">
-        <h4>🔵 Pack 2 – Python First Blood</h4>
-        <p>Découvre la programmation Python</p>
-      </div>
-      <div class="pack-card" onclick="openPopup(2)">
-        <h4>🔷 Pack 3 – Science & Code</h4>
-        <p>Modélise les sciences avec du code</p>
-      </div>
-      <div class="pack-card" onclick="openPopup(3)">
-        <h4>🌐 Pack 4 – Digital Creator</h4>
-        <p>Crée ton site web personnel</p>
-      </div>
-      <div class="pack-card" onclick="openPopup(4)">
-        <h4>🤖 Pack 5 – Smart Dev Tools</h4>
-        <p>Automatise, optimise et crée des outils</p>
-      </div>
-      <div class="pack-card" onclick="openPopup(5)">
-        <h4>🌟 Formule PREMIUM</h4>
-        <p>Le parcours ZÉRO → HÉROS complet</p>
-      </div>
-    </div>
-    <div class="text-center mt-5">
-      <a href="#inscription" class="btn btn-neon">Je m'inscris maintenant</a>
-    </div>
+  <section>
+    <div class="container">
+      <h2 class="section-title">Formations Spécialisées</h2>
+      <p class="section-subtitle">Programmes conçus pour les étudiants en physique, chimie, biologie, mathématiques et ingénierie</p>
+      
+      <div class="packs-grid">
+        <div class="pack-card" onclick="openPopup(0)">
+          <div class="pack-card-content">
+            <span class="pack-icon">🐍</span>
+            <span class="pack-badge">Fondamental</span>
+            <h4>Python Scientifique – Bases</h4>
+            <p>Maîtrisez Python pour la science : de l'installation aux premiers calculs scientifiques</p>
+            <div class="pack-duration">⏱ 20 heures • 4 semaines</div>
+          </div>
+        </div>
 
-    <section id="inscription" class="mt-5">
-      <h3 class="text-center">Formulaire d'inscription</h3>
-      <div class="ratio ratio-16x9">
-        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdD5zGpLkJt20O2x6RbzNlS1xB4w7q5jx3M-E4qKlE3h9X6qA/viewform?embedded=true" frameborder="0">Chargement…</iframe>
+        <div class="pack-card" onclick="openPopup(1)">
+          <div class="pack-card-content">
+            <span class="pack-icon">📊</span>
+            <span class="pack-badge">Intermédiaire</span>
+            <h4>Analyse de Données Scientifiques</h4>
+            <p>NumPy, Pandas, Matplotlib : traitez et visualisez vos données expérimentales</p>
+            <div class="pack-duration">⏱ 30 heures • 6 semaines</div>
+          </div>
+        </div>
+
+        <div class="pack-card" onclick="openPopup(2)">
+          <div class="pack-card-content">
+            <span class="pack-icon">🔬</span>
+            <span class="pack-badge">Avancé</span>
+            <h4>Modélisation & Simulation</h4>
+            <p>SciPy, SymPy : simulez des phénomènes physiques, résolvez des équations différentielles</p>
+            <div class="pack-duration">⏱ 35 heures • 7 semaines</div>
+          </div>
+        </div>
+
+        <div class="pack-card" onclick="openPopup(3)">
+          <div class="pack-card-content">
+            <span class="pack-icon">🤖</span>
+            <span class="pack-badge">Spécialisé</span>
+            <h4>Machine Learning pour Sciences</h4>
+            <p>Scikit-learn, TensorFlow : prédiction, classification et analyse intelligente</p>
+            <div class="pack-duration">⏱ 40 heures • 8 semaines</div>
+          </div>
+        </div>
+
+        <div class="pack-card" onclick="openPopup(4)">
+          <div class="pack-card-content">
+            <span class="pack-icon">⚡</span>
+            <span class="pack-badge">Pratique</span>
+            <h4>Automatisation Labo & Recherche</h4>
+            <p>Scripts pour traiter vos données, automatiser vos rapports et accélérer votre recherche</p>
+            <div class="pack-duration">⏱ 25 heures • 5 semaines</div>
+          </div>
+        </div>
+
+        <div class="pack-card premium" onclick="openPopup(5)">
+          <div class="pack-card-content">
+            <span class="pack-icon">🎓</span>
+            <span class="pack-badge">Premium</span>
+            <h4>Parcours Complet – Scientifique Python Expert</h4>
+            <p>De débutant à expert : toutes les formations + projets personnalisés + mentorat individuel</p>
+            <div class="pack-duration">⏱ 150 heures • 6 mois</div>
+          </div>
+        </div>
       </div>
-    </section>
-  </main>
-<footer>
-  <p>&copy; 2025 Genius Academy – Tous droits réservés</p>
-  <div class="social-icons mt-3">
-    <a href=https://t.me/genius_services_fwd_link" target="_blank" class="me-3" title="Facebook">
-      <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/telegram.svg" alt="Facebook" width="24" height="24" style="filter: invert(88%) sepia(79%) saturate(342%) hue-rotate(145deg);">
-    </a>
-    <a href="https://wa.me/22870817935?text=Bonjour%20je%20souhaite%20en%20savoir%20plus%20sur%20vos%20formations" target="_blank" class="me-3" title="Instagram">
-      <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/whatsapp.svg" alt="Instagram" width="24" height="24" style="filter: invert(88%) sepia(79%) saturate(342%) hue-rotate(145deg);">
-    </a>
-    <a href="https://linkedin.com" target="_blank" title="LinkedIn">
-      <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/linkedin.svg" alt="LinkedIn" width="24" height="24" style="filter: invert(88%) sepia(79%) saturate(342%) hue-rotate(145deg);">
-    </a>
-  </div>
-  <small class="d-block mt-3"><a href="#" style="color: var(--text-light); text-decoration: underline;">Mentions légales</a></small>
-</footer>
+
+      <div class="text-center mt-5">
+        <a href="#inscription" class="cta-button">Commencer ma formation</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="inscription">
+    <div class="container">
+      <h3 class="section-title">Inscription</h3>
+      <p class="section-subtitle">Rejoignez la prochaine session et transformez votre approche scientifique</p>
+      
+      <div class="iframe-section">
+        <div class="ratio ratio-16x9">
+          <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdD5zGpLkJt20O2x6RbzNlS1xB4w7q5jx3M-E4qKlE3h9X6qA/viewform?embedded=true" frameborder="0">Chargement…</iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p style="color: var(--text-light); margin-bottom: 1rem;">&copy; 2025 Python Science Academy – Expert Python pour la Recherche</p>
+    <div class="social-icons">
+      <a href="https://t.me/genius_services_fwd_link" target="_blank" title="Telegram">
+        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/telegram.svg" alt="Telegram" width="20" height="20" style="filter: invert(88%) sepia(79%) saturate(342%) hue-rotate(145deg);">
+      </a>
+      <a href="https://wa.me/22870817935?text=Bonjour%20je%20souhaite%20en%20savoir%20plus%20sur%20vos%20formations%20Python%20scientifiques" target="_blank" title="WhatsApp">
+        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/whatsapp.svg" alt="WhatsApp" width="20" height="20" style="filter: invert(88%) sepia(79%) saturate(342%) hue-rotate(145deg);">
+      </a>
+      <a href="https://linkedin.com" target="_blank" title="LinkedIn">
+        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/linkedin.svg" alt="LinkedIn" width="20" height="20" style="filter: invert(88%) sepia(79%) saturate(342%) hue-rotate(145deg);">
+      </a>
+    </div>
+    <small class="d-block mt-3"><a href="#" style="color: var(--text-muted); text-decoration: none;">Mentions légales</a></small>
+  </footer>
 
   <div id="popup" class="popup-pack">
     <div class="popup-content">
-      <button class="close-btn" onclick="closePopup()">&times;</button>
+      <button class="close-btn" onclick="closePopup()">×</button>
       <h2 id="popup-title"></h2>
       <p id="popup-desc"></p>
       <ul id="popup-list"></ul>
@@ -195,35 +592,79 @@
   <script>
     const packs = [
       {
-        title: "Pack 0 – Alpha Numérique",
-        desc: "Maîtrise les bases de l'informatique et d'Internet.",
-        items: ["Utilisation de l’ordinateur (clavier, souris, fichiers)", "Navigation Internet efficace", "Rédaction de documents avec Word", "Présentations PowerPoint", "Tableurs Excel / Google Sheets"]
+        title: "🐍 Python Scientifique – Bases",
+        desc: "Formation fondamentale pour débuter en Python avec une approche scientifique. Parfait pour les étudiants en L1-L2 ou débutants complets.",
+        items: [
+          "Installation et configuration de l'environnement scientifique (Anaconda, Jupyter)",
+          "Syntaxe Python : variables, types, opérateurs, structures de contrôle",
+          "Fonctions et modules pour la science",
+          "Introduction à NumPy : tableaux et opérations vectorielles",
+          "Premiers graphiques avec Matplotlib",
+          "Exercices appliqués : calculs de cinématique, statistiques descriptives"
+        ]
       },
       {
-        title: "Pack 2 – Python First Blood",
-        desc: "Découvre les bases de la programmation avec Python.",
-        items: ["Logique informatique", "Variables, boucles, conditions, fonctions", "Exercices corrigés", "Mini-projets: convertisseurs, mini-jeux"]
+        title: "📊 Analyse de Données Scientifiques",
+        desc: "Apprenez à traiter, nettoyer et visualiser vos données expérimentales comme un professionnel. Idéal pour L3-M1.",
+        items: [
+          "Pandas : manipulation de données tabulaires (DataFrames, Series)",
+          "Importation de données (CSV, Excel, fichiers de laboratoire)",
+          "Nettoyage et préparation des données",
+          "Statistiques exploratoires et tests statistiques",
+          "Visualisations avancées : histogrammes, scatter plots, heatmaps",
+          "Projet final : analyse complète d'un jeu de données scientifique"
+        ]
       },
       {
-        title: "Pack 3 – Science & Code",
-        desc: "Utilise le code pour modéliser les sciences.",
-        items: ["Maths utiles (fonctions, équations)", "Matplotlib, numpy, sympy", "Graphiques, simulations (chute libre, radioactivité)"]
+        title: "🔬 Modélisation & Simulation",
+        desc: "Simulez des phénomènes physiques et résolvez des équations complexes. Pour étudiants en M1-M2 et doctorants.",
+        items: [
+          "SciPy : résolution d'équations différentielles (ODE, PDE)",
+          "SymPy : calcul symbolique et algèbre",
+          "Modélisation de systèmes dynamiques (oscillateurs, réactions chimiques)",
+          "Simulations Monte Carlo et méthodes stochastiques",
+          "Optimisation et ajustement de courbes",
+          "Projet : simulation d'un système physique au choix (mécanique, électromagnétisme, thermodynamique)"
+        ]
       },
       {
-        title: "Pack 4 – Digital Creator",
-        desc: "Crée ton site web personnel.",
-        items: ["HTML, CSS, Bootstrap", "Ajout de projets, CV, contact", "Design responsive", "Hébergement GitHub Pages"]
+        title: "🤖 Machine Learning pour Sciences",
+        desc: "Exploitez l'IA pour analyser vos données scientifiques. Prédictions, classifications et découvertes assistées par ML.",
+        items: [
+          "Introduction au Machine Learning : concepts et workflows",
+          "Scikit-learn : régression, classification, clustering",
+          "Prétraitement de données scientifiques pour le ML",
+          "Validation croisée et évaluation de modèles",
+          "Introduction aux réseaux de neurones avec TensorFlow/Keras",
+          "Applications : prédiction de propriétés moléculaires, classification d'images scientifiques, détection d'anomalies"
+        ]
       },
       {
-        title: "Pack 5 – Smart Dev Tools",
-        desc: "Automatise et crée des outils pratiques avec Python.",
-        items: ["Scripts utiles", "Web scraping", "Organisation de fichiers", "Bases IA (chatbot)", "Projet GhostControl"]
+        title: "⚡ Automatisation Labo & Recherche",
+        desc: "Gagnez du temps en automatisant vos tâches répétitives : traitement de données, génération de rapports, pipelines d'analyse.",
+        items: [
+          "Scripts Python pour automatiser le traitement de données",
+          "Génération automatique de graphiques et rapports (PDF, LaTeX)",
+          "Organisation et renommage automatique de fichiers de données",
+          "Scraping de bases de données scientifiques",
+          "Création d'outils CLI personnalisés pour votre recherche",
+          "Intégration avec Excel, Word et outils de laboratoire"
+        ]
       },
       {
-        title: "Formule PREMIUM – ZÉRO → HÉROS",
-        desc: "Le parcours ultime : tous les packs, suivi, hackathon.",
-        items: ["Tous les packs inclus", "Suivi individuel personnalisé", "Hackathon final + Certificat Digital Hero", "Portfolio GitHub", "Communauté privée"]
-      },
+        title: "🎓 Parcours Complet – Scientifique Python Expert",
+        desc: "Le programme ultime : de zéro à expert Python scientifique avec mentorat personnalisé et projets sur mesure.",
+        items: [
+          "Accès à toutes les formations (150h de contenu)",
+          "Mentorat individuel hebdomadaire avec un expert Python",
+          "Projets personnalisés adaptés à votre domaine de recherche",
+          "Sessions de pair programming et revue de code",
+          "Développement d'un portfolio GitHub professionnel",
+          "Certificat reconnu + recommandation LinkedIn",
+          "Accès à vie au matériel et mises à jour",
+          "Communauté privée de scientifiques Python"
+        ]
+      }
     ];
 
     function openPopup(index) {
@@ -243,6 +684,12 @@
     function closePopup() {
       document.getElementById("popup").classList.remove("active");
     }
+    
+    document.getElementById("popup").addEventListener("click", function(e) {
+      if (e.target === this) {
+        closePopup();
+      }
+    });
   </script>
 </body>
 </html>
