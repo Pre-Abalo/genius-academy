@@ -1,695 +1,622 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Python Science Academy – Expert Python pour Étudiants en Sciences</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --primary: #6366f1;
-      --primary-dark: #4f46e5;
-      --secondary: #ec4899;
-      --accent: #8b5cf6;
-      --success: #10b981;
-      --bg-dark: #0f172a;
-      --bg-card: #1e293b;
-      --text-light: #f1f5f9;
-      --text-muted: #cbd5e1;
-      --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-      --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-    }
-    
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg-dark);
-      color: var(--text-light);
-      scroll-behavior: smooth;
-      overflow-x: hidden;
-    }
-    
-    /* Hero Section */
-    .hero {
-      position: relative;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--bg-dark);
-      overflow: hidden;
-    }
-    
-    .hero-bg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      opacity: 0.15;
-      background: 
-        radial-gradient(circle at 20% 50%, var(--primary) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, var(--secondary) 0%, transparent 50%),
-        radial-gradient(circle at 40% 20%, var(--accent) 0%, transparent 50%);
-      animation: pulse 8s ease-in-out infinite;
-    }
-    
-    @keyframes pulse {
-      0%, 100% { opacity: 0.15; }
-      50% { opacity: 0.25; }
-    }
-    
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      text-align: center;
-      padding: 2rem;
-      max-width: 1200px;
-    }
-    
-    .hero h1 {
-      font-size: clamp(2.5rem, 8vw, 5rem);
-      font-weight: 700;
-      margin-bottom: 1.5rem;
-      background: linear-gradient(135deg, #667eea, #f093fb, #00f2fe);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      animation: fadeInUp 0.8s ease forwards;
-    }
-    
-    .hero .subtitle {
-      font-size: clamp(1.2rem, 3vw, 1.8rem);
-      color: var(--text-muted);
-      margin-bottom: 1rem;
-      animation: fadeInUp 1s ease forwards;
-      animation-delay: 0.2s;
-      opacity: 0;
-    }
-    
-    .hero .tagline {
-      font-size: clamp(1rem, 2vw, 1.3rem);
-      color: var(--success);
-      font-family: 'JetBrains Mono', monospace;
-      margin-bottom: 3rem;
-      animation: fadeInUp 1s ease forwards;
-      animation-delay: 0.4s;
-      opacity: 0;
-    }
-    
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    
-    /* Stats Section */
-    .stats {
-      display: flex;
-      justify-content: center;
-      gap: 3rem;
-      margin-top: 3rem;
-      flex-wrap: wrap;
-      animation: fadeInUp 1s ease forwards;
-      animation-delay: 0.6s;
-      opacity: 0;
-    }
-    
-    .stat-item {
-      text-align: center;
-    }
-    
-    .stat-number {
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: var(--primary);
-    }
-    
-    .stat-label {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-      margin-top: 0.5rem;
-    }
-    
-    /* Section Styling */
-    section {
-      padding: 5rem 1rem;
-      position: relative;
-    }
-    
-    .section-title {
-      text-align: center;
-      font-size: clamp(2rem, 5vw, 3rem);
-      font-weight: 700;
-      margin-bottom: 1rem;
-      background: linear-gradient(135deg, var(--primary), var(--accent));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    
-    .section-subtitle {
-      text-align: center;
-      color: var(--text-muted);
-      font-size: 1.2rem;
-      margin-bottom: 4rem;
-      max-width: 700px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    
-    /* Pack Cards Grid */
-    .packs-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    
-    .pack-card {
-      background: var(--bg-card);
-      border-radius: 20px;
-      padding: 2rem;
-      position: relative;
-      cursor: pointer;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      overflow: hidden;
-    }
-    
-    .pack-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: var(--gradient-1);
-      opacity: 0;
-      transition: opacity 0.4s ease;
-      z-index: 0;
-    }
-    
-    .pack-card:nth-child(2)::before { background: var(--gradient-2); }
-    .pack-card:nth-child(3)::before { background: var(--gradient-3); }
-    .pack-card:nth-child(4)::before { background: var(--gradient-1); }
-    .pack-card:nth-child(5)::before { background: var(--gradient-2); }
-    
-    .pack-card:hover {
-      transform: translateY(-10px) scale(1.02);
-      box-shadow: 0 20px 60px rgba(99, 102, 241, 0.4);
-    }
-    
-    .pack-card:hover::before {
-      opacity: 0.15;
-    }
-    
-    .pack-card-content {
-      position: relative;
-      z-index: 1;
-    }
-    
-    .pack-icon {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-      display: block;
-    }
-    
-    .pack-badge {
-      display: inline-block;
-      padding: 0.3rem 0.8rem;
-      background: rgba(99, 102, 241, 0.2);
-      color: var(--primary);
-      border-radius: 20px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    
-    .pack-card h4 {
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-      color: var(--text-light);
-    }
-    
-    .pack-card p {
-      color: var(--text-muted);
-      line-height: 1.6;
-      margin-bottom: 1.5rem;
-    }
-    
-    .pack-duration {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      color: var(--success);
-      font-size: 0.9rem;
-      font-family: 'JetBrains Mono', monospace;
-    }
-    
-    /* Premium Card */
-    .pack-card.premium {
-      background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
-      border: 2px solid var(--primary);
-    }
-    
-    .pack-card.premium .pack-badge {
-      background: var(--gradient-1);
-      color: white;
-    }
-    
-    /* CTA Button */
-    .cta-button {
-      display: inline-block;
-      padding: 1rem 3rem;
-      background: var(--gradient-1);
-      color: white;
-      text-decoration: none;
-      border-radius: 50px;
-      font-weight: 600;
-      font-size: 1.1rem;
-      transition: all 0.3s ease;
-      border: none;
-      cursor: pointer;
-      box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
-    }
-    
-    .cta-button:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 15px 40px rgba(99, 102, 241, 0.6);
-      color: white;
-    }
-    
-    /* Popup */
-    .popup-pack {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.9);
-      backdrop-filter: blur(10px);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-      padding: 1rem;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-    
-    .popup-pack.active {
-      display: flex;
-      opacity: 1;
-    }
-    
-    .popup-content {
-      background: var(--bg-card);
-      border-radius: 20px;
-      padding: 3rem;
-      max-width: 700px;
-      width: 100%;
-      position: relative;
-      max-height: 90vh;
-      overflow-y: auto;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      animation: scaleIn 0.3s ease forwards;
-    }
-    
-    @keyframes scaleIn {
-      from {
-        transform: scale(0.9);
-        opacity: 0;
-      }
-      to {
-        transform: scale(1);
-        opacity: 1;
-      }
-    }
-    
-    .close-btn {
-      position: absolute;
-      top: 1.5rem;
-      right: 1.5rem;
-      background: rgba(255, 255, 255, 0.1);
-      border: none;
-      color: var(--text-light);
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      font-size: 1.5rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    
-    .close-btn:hover {
-      background: var(--primary);
-      transform: rotate(90deg);
-    }
-    
-    .popup-content h2 {
-      color: var(--primary);
-      margin-bottom: 1rem;
-      font-size: 2rem;
-    }
-    
-    .popup-content p {
-      color: var(--text-muted);
-      margin-bottom: 2rem;
-      line-height: 1.6;
-    }
-    
-    .popup-content ul {
-      list-style: none;
-      padding: 0;
-    }
-    
-    .popup-content ul li {
-      padding: 0.8rem 0;
-      padding-left: 2rem;
-      position: relative;
-      color: var(--text-light);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    }
-    
-    .popup-content ul li::before {
-      content: '→';
-      position: absolute;
-      left: 0;
-      color: var(--primary);
-      font-weight: bold;
-    }
-    
-    /* Footer */
-    footer {
-      background: rgba(15, 23, 42, 0.8);
-      backdrop-filter: blur(10px);
-      padding: 3rem 1rem;
-      text-align: center;
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
-    }
-    
-    .social-icons a {
-      display: inline-block;
-      width: 40px;
-      height: 40px;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 50%;
-      margin: 0 0.5rem;
-      transition: all 0.3s ease;
-    }
-    
-    .social-icons a:hover {
-      background: var(--primary);
-      transform: translateY(-3px);
-    }
-    
-    /* Iframe Section */
-    .iframe-section {
-      background: var(--bg-card);
-      border-radius: 20px;
-      padding: 3rem;
-      max-width: 900px;
-      margin: 0 auto;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-    }
-    
-    /* Responsive */
-    @media (max-width: 768px) {
-      .hero h1 {
-        font-size: 2.5rem;
-      }
-      
-      .stats {
-        gap: 2rem;
-      }
-      
-      .packs-grid {
-        grid-template-columns: 1fr;
-      }
-      
-      .popup-content {
-        padding: 2rem;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genius Academy - Formations d'Excellence</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #00f5ff;
+            --secondary: #ff00ff;
+            --dark: #0a0a0f;
+            --card-bg: rgba(20, 20, 40, 0.8);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 100%);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .bg-animation {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0,245,255,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 15, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 245, 255, 0.2);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .btn {
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 245, 255, 0.3);
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 5%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1600&q=80') center/cover;
+            opacity: 0.15;
+            z-index: -1;
+        }
+
+        .hero-content {
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #fff, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { filter: drop-shadow(0 0 20px rgba(0, 245, 255, 0.5)); }
+            50% { filter: drop-shadow(0 0 40px rgba(0, 245, 255, 0.8)); }
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: #aaa;
+        }
+
+        section {
+            padding: 5rem 5%;
+            min-height: 100vh;
+        }
+
+        h2 {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .formations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .formation-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 245, 255, 0.2);
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .formation-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 245, 255, 0.3);
+            border-color: var(--primary);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 2px solid rgba(0, 245, 255, 0.3);
+        }
+
+        .card-content {
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .formation-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .formation-card .desc {
+            color: #aaa;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .formation-card ul {
+            list-style: none;
+            margin: 1rem 0;
+            flex-grow: 1;
+        }
+
+        .formation-card li {
+            color: #ccc;
+            margin-bottom: 0.7rem;
+            padding-left: 1.5rem;
+            position: relative;
+            font-size: 0.9rem;
+        }
+
+        .formation-card li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .formation-card .price {
+            font-size: 1.8rem;
+            color: var(--secondary);
+            font-weight: bold;
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+
+        .formation-card .level {
+            text-align: center;
+            color: #888;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .formation-card .btn-enroll {
+            margin-top: 1rem;
+            width: 100%;
+            text-align: center;
+        }
+
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-info {
+            background: var(--card-bg);
+            border: 1px solid rgba(0, 245, 255, 0.2);
+            border-radius: 15px;
+            padding: 3rem;
+            margin-top: 2rem;
+        }
+
+        .contact-info h3 {
+            color: var(--primary);
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            font-size: 1.2rem;
+            color: #ccc;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-top: 3rem;
+        }
+
+        .social-links a {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            border: 2px solid var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 1.5rem;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 245, 255, 0.3);
+            background: var(--primary);
+            color: #000;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .formations-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-  <header class="hero">
-    <div class="hero-bg"></div>
+<div class="bg-animation"></div>
+
+<nav>
+    <div class="logo">
+        <span class="logo-icon">🎓</span>
+        <span>Genius Academy</span>
+    </div>
+    <ul class="nav-links">
+        <li><a onclick="scrollToSection('home')">Accueil</a></li>
+        <li><a onclick="scrollToSection('formations')">Formations</a></li>
+        <li><a onclick="scrollToSection('contact')">Contact</a></li>
+    </ul>
+</nav>
+
+<section class="hero" id="home">
     <div class="hero-content">
-      <h1>Python Science Academy</h1>
-      <p class="subtitle">Formations Python pour Étudiants en Sciences</p>
-      <p class="tagline">// Expert Python • Modélisation Scientifique • Analyse de Données</p>
-      
-      <div class="stats">
-        <div class="stat-item">
-          <div class="stat-number">15+</div>
-          <div class="stat-label">Ans d'expertise Python</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-number">100%</div>
-          <div class="stat-label">Orienté Sciences</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-number">∞</div>
-          <div class="stat-label">Possibilités</div>
-        </div>
-      </div>
+        <h1>Genius Academy</h1>
+        <p>Formations d'Excellence en Informatique et Sciences</p>
+        <button class="btn btn-primary" onclick="scrollToSection('formations')">Découvrir les formations</button>
     </div>
-  </header>
+</section>
 
-  <section>
-    <div class="container">
-      <h2 class="section-title">Formations Spécialisées</h2>
-      <p class="section-subtitle">Programmes conçus pour les étudiants en physique, chimie, biologie, mathématiques et ingénierie</p>
-      
-      <div class="packs-grid">
-        <div class="pack-card" onclick="openPopup(0)">
-          <div class="pack-card-content">
-            <span class="pack-icon">🐍</span>
-            <span class="pack-badge">Fondamental</span>
-            <h4>Python Scientifique – Bases</h4>
-            <p>Maîtrisez Python pour la science : de l'installation aux premiers calculs scientifiques</p>
-            <div class="pack-duration">⏱ 20 heures • 4 semaines</div>
-          </div>
+<section id="formations">
+    <h2>Nos Formations</h2>
+    <div class="formations-grid">
+        <!-- Python Scientifique -->
+        <div class="formation-card">
+            <img src="https://images.unsplash.com/photo-1526379095098-d400fd0bf935?w=800&q=80" alt="Python" class="card-image">
+            <div class="card-content">
+                <h3>🐍 Python Scientifique – Bases</h3>
+                <p class="desc">Formation fondamentale pour débuter en Python avec une approche scientifique. Parfait pour les étudiants en L1-L2 ou débutants complets.</p>
+                <ul>
+                    <li>Installation et configuration de l'environnement scientifique</li>
+                    <li>Syntaxe Python : variables, types, structures de contrôle</li>
+                    <li>Introduction à NumPy et Matplotlib</li>
+                    <li>Exercices appliqués et projets pratiques</li>
+                </ul>
+                <div class="price">25 000 FCFA</div>
+                <div class="level">🎓 Niveau: Débutant | ⏱️ 6 semaines</div>
+                <button class="btn btn-primary btn-enroll" onclick="openEnrollForm('Python Scientifique – Bases')">S'inscrire</button>
+            </div>
         </div>
 
-        <div class="pack-card" onclick="openPopup(1)">
-          <div class="pack-card-content">
-            <span class="pack-icon">📊</span>
-            <span class="pack-badge">Intermédiaire</span>
-            <h4>Analyse de Données Scientifiques</h4>
-            <p>NumPy, Pandas, Matplotlib : traitez et visualisez vos données expérimentales</p>
-            <div class="pack-duration">⏱ 30 heures • 6 semaines</div>
-          </div>
+        <!-- Analyse de Données -->
+        <div class="formation-card">
+            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80" alt="Data Analysis" class="card-image">
+            <div class="card-content">
+                <h3>📊 Analyse de Données Scientifiques</h3>
+                <p class="desc">Apprenez à traiter, nettoyer et visualiser vos données expérimentales comme un professionnel. Idéal pour L3-M1.</p>
+                <ul>
+                    <li>Pandas : manipulation de données tabulaires</li>
+                    <li>Nettoyage et préparation des données</li>
+                    <li>Statistiques exploratoires et tests statistiques</li>
+                    <li>Visualisations avancées et projet final</li>
+                </ul>
+                <div class="price">30 000 FCFA</div>
+                <div class="level">🎓 Niveau: Intermédiaire | ⏱️ 8 semaines</div>
+                <button class="btn btn-primary btn-enroll" onclick="openEnrollForm('Analyse de Données Scientifiques')">S'inscrire</button>
+            </div>
         </div>
 
-        <div class="pack-card" onclick="openPopup(2)">
-          <div class="pack-card-content">
-            <span class="pack-icon">🔬</span>
-            <span class="pack-badge">Avancé</span>
-            <h4>Modélisation & Simulation</h4>
-            <p>SciPy, SymPy : simulez des phénomènes physiques, résolvez des équations différentielles</p>
-            <div class="pack-duration">⏱ 35 heures • 7 semaines</div>
-          </div>
+        <!-- Modélisation -->
+        <div class="formation-card">
+            <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800&q=80" alt="Simulation" class="card-image">
+            <div class="card-content">
+                <h3>🔬 Modélisation & Simulation</h3>
+                <p class="desc">Simulez des phénomènes physiques et résolvez des équations complexes. Pour étudiants en M1-M2 et doctorants.</p>
+                <ul>
+                    <li>SciPy : résolution d'équations différentielles</li>
+                    <li>Modélisation de systèmes dynamiques</li>
+                    <li>Simulations Monte Carlo</li>
+                    <li>Projet : simulation d'un système physique</li>
+                </ul>
+                <div class="price">35 000 FCFA</div>
+                <div class="level">🎓 Niveau: Avancé | ⏱️ 10 semaines</div>
+                <button class="btn btn-primary btn-enroll" onclick="openEnrollForm('Modélisation & Simulation')">S'inscrire</button>
+            </div>
         </div>
 
-        <div class="pack-card" onclick="openPopup(3)">
-          <div class="pack-card-content">
-            <span class="pack-icon">🤖</span>
-            <span class="pack-badge">Spécialisé</span>
-            <h4>Machine Learning pour Sciences</h4>
-            <p>Scikit-learn, TensorFlow : prédiction, classification et analyse intelligente</p>
-            <div class="pack-duration">⏱ 40 heures • 8 semaines</div>
-          </div>
+        <!-- Machine Learning -->
+        <div class="formation-card">
+            <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80" alt="Machine Learning" class="card-image">
+            <div class="card-content">
+                <h3>🤖 Machine Learning pour Sciences</h3>
+                <p class="desc">Exploitez l'IA pour analyser vos données scientifiques. Prédictions, classifications et découvertes assistées par ML.</p>
+                <ul>
+                    <li>Introduction au Machine Learning</li>
+                    <li>Scikit-learn : régression, classification, clustering</li>
+                    <li>Réseaux de neurones avec TensorFlow/Keras</li>
+                    <li>Applications scientifiques concrètes</li>
+                </ul>
+                <div class="price">40 000 FCFA</div>
+                <div class="level">🎓 Niveau: Avancé | ⏱️ 12 semaines</div>
+                <button class="btn btn-primary btn-enroll" onclick="openEnrollForm('Machine Learning pour Sciences')">S'inscrire</button>
+            </div>
         </div>
 
-        <div class="pack-card" onclick="openPopup(4)">
-          <div class="pack-card-content">
-            <span class="pack-icon">⚡</span>
-            <span class="pack-badge">Pratique</span>
-            <h4>Automatisation Labo & Recherche</h4>
-            <p>Scripts pour traiter vos données, automatiser vos rapports et accélérer votre recherche</p>
-            <div class="pack-duration">⏱ 25 heures • 5 semaines</div>
-          </div>
+        <!-- Automatisation -->
+        <div class="formation-card">
+            <img src="https://images.unsplash.com/photo-1518432031352-d6fc5c10da5a?w=800&q=80" alt="Automation" class="card-image">
+            <div class="card-content">
+                <h3>⚡ Automatisation Labo & Recherche</h3>
+                <p class="desc">Gagnez du temps en automatisant vos tâches répétitives : traitement de données, génération de rapports, pipelines d'analyse.</p>
+                <ul>
+                    <li>Scripts Python pour automatisation</li>
+                    <li>Génération automatique de rapports</li>
+                    <li>Scraping de bases de données scientifiques</li>
+                    <li>Intégration avec Excel et outils de labo</li>
+                </ul>
+                <div class="price">32 000 FCFA</div>
+                <div class="level">🎓 Niveau: Intermédiaire | ⏱️ 8 semaines</div>
+                <button class="btn btn-primary btn-enroll" onclick="openEnrollForm('Automatisation Labo & Recherche')">S'inscrire</button>
+            </div>
         </div>
 
-        <div class="pack-card premium" onclick="openPopup(5)">
-          <div class="pack-card-content">
-            <span class="pack-icon">🎓</span>
-            <span class="pack-badge">Premium</span>
-            <h4>Parcours Complet – Scientifique Python Expert</h4>
-            <p>De débutant à expert : toutes les formations + projets personnalisés + mentorat individuel</p>
-            <div class="pack-duration">⏱ 150 heures • 6 mois</div>
-          </div>
+        <!-- Bureautique -->
+        <div class="formation-card">
+            <img src="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&q=80" alt="Bureautique" class="card-image">
+            <div class="card-content">
+                <h3>💼 Pack Bureautique Pro</h3>
+                <p class="desc">Maîtrisez les outils essentiels de la bureautique moderne : Word, Excel, PowerPoint et Google Workspace.</p>
+                <ul>
+                    <li>Microsoft Word : documents professionnels avancés</li>
+                    <li>Excel : formules, tableaux croisés, graphiques</li>
+                    <li>PowerPoint : présentations percutantes</li>
+                    <li>Google Workspace et collaboration en ligne</li>
+                    <li>Automatisation avec macros VBA</li>
+                </ul>
+                <div class="price">25 000 FCFA</div>
+                <div class="level">🎓 Niveau: Débutant | ⏱️ 6 semaines</div>
+                <button class="btn btn-primary btn-enroll" onclick="openEnrollForm('Pack Bureautique Pro')">S'inscrire</button>
+            </div>
         </div>
-      </div>
 
-      <div class="text-center mt-5">
-        <a href="#inscription" class="cta-button">Commencer ma formation</a>
-      </div>
+        <!-- Langage C -->
+        <div class="formation-card">
+            <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80" alt="Programmation C" class="card-image">
+            <div class="card-content">
+                <h3>⚙️ Initiation au Langage C</h3>
+                <p class="desc">Découvrez les fondamentaux de la programmation avec le langage C. Base essentielle pour tout développeur.</p>
+                <ul>
+                    <li>Syntaxe C : variables, pointeurs, structures</li>
+                    <li>Gestion de la mémoire et allocation dynamique</li>
+                    <li>Structures de données (listes, piles, files)</li>
+                    <li>Manipulation de fichiers</li>
+                    <li>Projets pratiques et debugging</li>
+                </ul>
+                <div class="price">28 000 FCFA</div>
+                <div class="level">🎓 Niveau: Débutant-Intermédiaire | ⏱️ 8 semaines</div>
+                <button class="btn btn-primary btn-enroll" onclick="openEnrollForm('Initiation au Langage C')">S'inscrire</button>
+            </div>
+        </div>
+
+        <!-- Développement Web -->
+        <div class="formation-card">
+            <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&q=80" alt="Web Dev" class="card-image">
+            <div class="card-content">
+                <h3>🌐 Développement Web Fullstack</h3>
+                <p class="desc">Créez des sites web modernes et interactifs. Du front-end au back-end, devenez développeur web complet.</p>
+                <ul>
+                    <li>HTML5, CSS3 et design responsive</li>
+                    <li>JavaScript moderne (ES6+) et DOM</li>
+                    <li>Framework React pour interfaces dynamiques</li>
+                    <li>Node.js et bases de données</li>
+                    <li>Déploiement et hébergement de sites</li>
+                </ul>
+                <div class="price">38 000 FCFA</div>
+                <div class="level">🎓 Niveau: Intermédiaire | ⏱️ 12 semaines</div>
+                <button class="btn btn-primary btn-enroll" onclick="openEnrollForm('Développement Web Fullstack')">S'inscrire</button>
+            </div>
+        </div>
+
+        <!-- Parcours Complet -->
+        <div class="formation-card">
+            <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&q=80" alt="Expert" class="card-image">
+            <div class="card-content">
+                <h3>🎓 Parcours Complet – Expert</h3>
+                <p class="desc">Le programme ultime : de zéro à expert avec mentorat personnalisé et projets sur mesure.</p>
+                <ul>
+                    <li>Accès à toutes les formations (150h+)</li>
+                    <li>Mentorat individuel hebdomadaire</li>
+                    <li>Projets personnalisés sur mesure</li>
+                    <li>Portfolio GitHub professionnel</li>
+                    <li>Certificat reconnu + recommandation</li>
+                    <li>Accès à vie et communauté privée</li>
+                </ul>
+                <div class="price">45 000 FCFA</div>
+                <div class="level">🎓 Tous niveaux | ⏱️ 6 mois</div>
+                <button class="btn btn-primary btn-enroll" onclick="openEnrollForm('Parcours Complet – Expert')">S'inscrire</button>
+            </div>
+        </div>
     </div>
-  </section>
+</section>
 
-  <section id="inscription">
-    <div class="container">
-      <h3 class="section-title">Inscription</h3>
-      <p class="section-subtitle">Rejoignez la prochaine session et transformez votre approche scientifique</p>
-      
-      <div class="iframe-section">
-        <div class="ratio ratio-16x9">
-          <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdD5zGpLkJt20O2x6RbzNlS1xB4w7q5jx3M-E4qKlE3h9X6qA/viewform?embedded=true" frameborder="0">Chargement…</iframe>
+<section id="contact">
+    <h2>Contactez-nous</h2>
+    <div class="contact-container">
+        <p style="font-size: 1.2rem; color: #aaa; margin-bottom: 2rem;">
+            Une question ? Besoin d'informations ? N'hésitez pas à nous contacter !
+        </p>
+        <div class="contact-info">
+            <h3>📞 Nos Coordonnées</h3>
+            <div class="contact-item">
+                <span>📧</span>
+                <span>Barry.StarLabs.Allen@gmail.com</span>
+            </div>
+            <div class="contact-item">
+                <span>📱</span>
+                <span>+228 70 81 79 35</span>
+            </div>
+            <div class="contact-item">
+                <span>📍</span>
+                <span>Kara, Togo</span>
+            </div>
+
+            <div class="social-links">
+                <a
+                        href="https://wa.me/228708179?text=Bonjour,%20je%20souhaite%20entrer%20en%20contact%20!" title="WhatsApp"
+                >
+                    W
+                </a>
+                <a href="#" title="Facebook">f</a>
+                <a href="#" title="Twitter">𝕏</a>
+                <a href="#" title="LinkedIn">in</a>
+            </div>
         </div>
-      </div>
     </div>
-  </section>
+</section>
 
-  <footer>
-    <p style="color: var(--text-light); margin-bottom: 1rem;">&copy; 2025 Python Science Academy – Expert Python pour la Recherche</p>
-    <div class="social-icons">
-      <a href="https://t.me/genius_services_fwd_link" target="_blank" title="Telegram">
-        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/telegram.svg" alt="Telegram" width="20" height="20" style="filter: invert(88%) sepia(79%) saturate(342%) hue-rotate(145deg);">
-      </a>
-      <a href="https://wa.me/22870817935?text=Bonjour%20je%20souhaite%20en%20savoir%20plus%20sur%20vos%20formations%20Python%20scientifiques" target="_blank" title="WhatsApp">
-        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/whatsapp.svg" alt="WhatsApp" width="20" height="20" style="filter: invert(88%) sepia(79%) saturate(342%) hue-rotate(145deg);">
-      </a>
-      <a href="https://linkedin.com" target="_blank" title="LinkedIn">
-        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/linkedin.svg" alt="LinkedIn" width="20" height="20" style="filter: invert(88%) sepia(79%) saturate(342%) hue-rotate(145deg);">
-      </a>
-    </div>
-    <small class="d-block mt-3"><a href="#" style="color: var(--text-muted); text-decoration: none;">Mentions légales</a></small>
-  </footer>
+<script>
+    const GOOGLE_FORM_BASE_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSdRITrTkr72c5McbylG13wi2l0Elx3cvrh-V0OzoNt1IdPnjw/viewform';
 
-  <div id="popup" class="popup-pack">
-    <div class="popup-content">
-      <button class="close-btn" onclick="closePopup()">×</button>
-      <h2 id="popup-title"></h2>
-      <p id="popup-desc"></p>
-      <ul id="popup-list"></ul>
-    </div>
-  </div>
+    // IDs des champs de ton Google Form (à personnaliser)
+    const FORM_FIELD_IDS = {
+        formation: 'entry.hj99tb2',
+        nom: 'entry.XXXXXXXX',
+        email: 'entry.XXXXXXXX',
+        telephone: 'entry.XXXXXXXX'
+    };
 
-  <script>
-    const packs = [
-      {
-        title: "🐍 Python Scientifique – Bases",
-        desc: "Formation fondamentale pour débuter en Python avec une approche scientifique. Parfait pour les étudiants en L1-L2 ou débutants complets.",
-        items: [
-          "Installation et configuration de l'environnement scientifique (Anaconda, Jupyter)",
-          "Syntaxe Python : variables, types, opérateurs, structures de contrôle",
-          "Fonctions et modules pour la science",
-          "Introduction à NumPy : tableaux et opérations vectorielles",
-          "Premiers graphiques avec Matplotlib",
-          "Exercices appliqués : calculs de cinématique, statistiques descriptives"
-        ]
-      },
-      {
-        title: "📊 Analyse de Données Scientifiques",
-        desc: "Apprenez à traiter, nettoyer et visualiser vos données expérimentales comme un professionnel. Idéal pour L3-M1.",
-        items: [
-          "Pandas : manipulation de données tabulaires (DataFrames, Series)",
-          "Importation de données (CSV, Excel, fichiers de laboratoire)",
-          "Nettoyage et préparation des données",
-          "Statistiques exploratoires et tests statistiques",
-          "Visualisations avancées : histogrammes, scatter plots, heatmaps",
-          "Projet final : analyse complète d'un jeu de données scientifique"
-        ]
-      },
-      {
-        title: "🔬 Modélisation & Simulation",
-        desc: "Simulez des phénomènes physiques et résolvez des équations complexes. Pour étudiants en M1-M2 et doctorants.",
-        items: [
-          "SciPy : résolution d'équations différentielles (ODE, PDE)",
-          "SymPy : calcul symbolique et algèbre",
-          "Modélisation de systèmes dynamiques (oscillateurs, réactions chimiques)",
-          "Simulations Monte Carlo et méthodes stochastiques",
-          "Optimisation et ajustement de courbes",
-          "Projet : simulation d'un système physique au choix (mécanique, électromagnétisme, thermodynamique)"
-        ]
-      },
-      {
-        title: "🤖 Machine Learning pour Sciences",
-        desc: "Exploitez l'IA pour analyser vos données scientifiques. Prédictions, classifications et découvertes assistées par ML.",
-        items: [
-          "Introduction au Machine Learning : concepts et workflows",
-          "Scikit-learn : régression, classification, clustering",
-          "Prétraitement de données scientifiques pour le ML",
-          "Validation croisée et évaluation de modèles",
-          "Introduction aux réseaux de neurones avec TensorFlow/Keras",
-          "Applications : prédiction de propriétés moléculaires, classification d'images scientifiques, détection d'anomalies"
-        ]
-      },
-      {
-        title: "⚡ Automatisation Labo & Recherche",
-        desc: "Gagnez du temps en automatisant vos tâches répétitives : traitement de données, génération de rapports, pipelines d'analyse.",
-        items: [
-          "Scripts Python pour automatiser le traitement de données",
-          "Génération automatique de graphiques et rapports (PDF, LaTeX)",
-          "Organisation et renommage automatique de fichiers de données",
-          "Scraping de bases de données scientifiques",
-          "Création d'outils CLI personnalisés pour votre recherche",
-          "Intégration avec Excel, Word et outils de laboratoire"
-        ]
-      },
-      {
-        title: "🎓 Parcours Complet – Scientifique Python Expert",
-        desc: "Le programme ultime : de zéro à expert Python scientifique avec mentorat personnalisé et projets sur mesure.",
-        items: [
-          "Accès à toutes les formations (150h de contenu)",
-          "Mentorat individuel hebdomadaire avec un expert Python",
-          "Projets personnalisés adaptés à votre domaine de recherche",
-          "Sessions de pair programming et revue de code",
-          "Développement d'un portfolio GitHub professionnel",
-          "Certificat reconnu + recommandation LinkedIn",
-          "Accès à vie au matériel et mises à jour",
-          "Communauté privée de scientifiques Python"
-        ]
-      }
-    ];
-
-    function openPopup(index) {
-      const pack = packs[index];
-      document.getElementById("popup-title").innerText = pack.title;
-      document.getElementById("popup-desc").innerText = pack.desc;
-      const list = document.getElementById("popup-list");
-      list.innerHTML = "";
-      pack.items.forEach(item => {
-        const li = document.createElement("li");
-        li.textContent = item;
-        list.appendChild(li);
-      });
-      document.getElementById("popup").classList.add("active");
+    function scrollToSection(id) {
+        document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
     }
 
-    function closePopup() {
-      document.getElementById("popup").classList.remove("active");
+    function openEnrollForm(formationName) {
+        const formUrl = `${GOOGLE_FORM_BASE_URL}?${FORM_FIELD_IDS.formation}=${encodeURIComponent(formationName)}`;
+        window.open(formUrl, '_blank');
     }
-    
-    document.getElementById("popup").addEventListener("click", function(e) {
-      if (e.target === this) {
-        closePopup();
-      }
+
+    // Animation au scroll
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -100px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.formation-card').forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(50px)';
+        card.style.transition = 'all 0.6s ease-out';
+        observer.observe(card);
     });
-  </script>
+</script>
 </body>
 </html>
