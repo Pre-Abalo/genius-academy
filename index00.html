@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Genius Academy — Formations d'Excellence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Epilogue:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+    <style>
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+        :root {
+            --bg:       #07080d;
+            --bg2:      #0e101a;
+            --border:   rgba(255,255,255,0.07);
+            --gold:     #f0b429;
+            --coral:    #ff5e5b;
+            --teal:     #00d2c6;
+            --text:     #e8e9f0;
+            --muted:    #7b7d8e;
+            --radius:   14px;
+            --font-h:   'Syne', sans-serif;
+            --font-b:   'Epilogue', sans-serif;
+        }
+
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-b); background: var(--bg); color: var(--text); overflow-x: hidden; line-height: 1.6; }
+
+        #particles-canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: .4; }
+
+        /* NAV */
+        nav {
+            position: fixed; top: 0; width: 100%; z-index: 200;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: .9rem 6%;
+            background: rgba(7,8,13,.88);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid var(--border);
+        }
+        .logo {
+            display: flex; align-items: center; gap: .55rem;
+            font-family: var(--font-h); font-size: 1.45rem; font-weight: 800;
+            background: linear-gradient(90deg, var(--gold), var(--coral));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            cursor: pointer; user-select: none;
+        }
+        .logo-svg { width: 34px; height: 34px; flex-shrink: 0; }
+        .nav-links { display: flex; gap: 2.4rem; list-style: none; }
+        .nav-links a { font-size: .9rem; font-weight: 500; color: var(--muted); text-decoration: none; letter-spacing: .03em; transition: color .25s; cursor: pointer; }
+        .nav-links a:hover { color: var(--text); }
+        .nav-cta { padding: .55rem 1.4rem; background: var(--gold); color: #07080d; font-weight: 700; font-size: .88rem; border: none; border-radius: 50px; cursor: pointer; transition: transform .25s, box-shadow .25s; font-family: var(--font-b); }
+        .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(240,180,41,.35); }
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 6px; background: none; border: none; }
+        .hamburger span { display: block; width: 24px; height: 2px; background: var(--text); border-radius: 2px; transition: all .3s; }
+        .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .hamburger.open span:nth-child(2) { opacity: 0; }
+        .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+        .mobile-nav { display: none; position: fixed; top: 60px; left: 0; right: 0; background: rgba(7,8,13,.97); backdrop-filter: blur(18px); z-index: 190; padding: 1.5rem 6%; border-bottom: 1px solid var(--border); flex-direction: column; gap: 1.4rem; }
+        .mobile-nav.open { display: flex; }
+        .mobile-nav a { color: var(--text); text-decoration: none; font-size: 1.1rem; font-weight: 500; cursor: pointer; }
+        .mobile-enroll { padding: .8rem 1.5rem; background: var(--gold); color: #07080d; font-weight: 700; font-size: .95rem; border: none; border-radius: 50px; cursor: pointer; font-family: var(--font-b); }
+
+        /* HERO */
+        .hero { position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 8rem 6% 5rem; z-index: 1; }
+        .hero-tag { display: inline-flex; align-items: center; gap: .5rem; font-size: .8rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); border: 1px solid rgba(240,180,41,.3); border-radius: 50px; padding: .35rem 1rem; margin-bottom: 2rem; animation: fadeUp .7s ease both; }
+        .hero-dot { width: 7px; height: 7px; background: var(--gold); border-radius: 50%; animation: pulse 1.5s ease infinite; }
+        @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(1.5)} }
+        .hero h1 { font-family: var(--font-h); font-size: clamp(3rem,7vw,5.5rem); font-weight: 800; line-height: 1.08; background: linear-gradient(135deg, #fff 30%, var(--gold) 70%, var(--coral) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1.5rem; animation: fadeUp .7s .1s ease both; }
+        .hero-sub { font-size: clamp(1rem,2.2vw,1.25rem); color: var(--muted); max-width: 600px; margin: 0 auto 2.8rem; animation: fadeUp .7s .2s ease both; }
+        .hero-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; animation: fadeUp .7s .3s ease both; }
+        .btn { padding: .75rem 1.9rem; border-radius: 50px; font-weight: 600; font-size: .95rem; cursor: pointer; transition: all .25s; border: none; letter-spacing: .02em; font-family: var(--font-b); }
+        .btn-gold { background: var(--gold); color: #07080d; }
+        .btn-gold:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(240,180,41,.4); }
+        .btn-ghost { background: transparent; color: var(--text); border: 1px solid var(--border); }
+        .btn-ghost:hover { border-color: rgba(255,255,255,.3); background: rgba(255,255,255,.05); }
+        .hero-stats { display: flex; gap: 3rem; justify-content: center; flex-wrap: wrap; margin-top: 5rem; animation: fadeUp .7s .45s ease both; }
+        .stat { text-align: center; }
+        .stat-n { font-family: var(--font-h); font-size: 2.2rem; font-weight: 800; background: linear-gradient(90deg, var(--gold), var(--coral)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .stat-l { font-size: .8rem; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-top: .15rem; }
+        @keyframes fadeUp { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
+
+        /* SECTIONS */
+        section { position: relative; z-index: 1; }
+        .section-inner { max-width: 1280px; margin: 0 auto; padding: 6rem 6%; }
+        .section-label { font-size: .78rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--gold); margin-bottom: .75rem; }
+        .section-title { font-family: var(--font-h); font-size: clamp(2rem,4vw,3rem); font-weight: 800; line-height: 1.1; margin-bottom: 1rem; }
+        .section-desc { color: var(--muted); font-size: 1.05rem; max-width: 560px; }
+        .section-head { margin-bottom: 4rem; }
+
+        /* FILTERS */
+        .filters { display: flex; gap: .6rem; flex-wrap: wrap; margin-bottom: 3rem; }
+        .filter-btn { padding: .45rem 1.2rem; border-radius: 50px; cursor: pointer; font-size: .82rem; font-weight: 600; letter-spacing: .04em; border: 1px solid var(--border); background: transparent; color: var(--muted); transition: all .22s; font-family: var(--font-b); }
+        .filter-btn:hover { border-color: rgba(255,255,255,.2); color: var(--text); }
+        .filter-btn.active { background: var(--gold); color: #07080d; border-color: var(--gold); }
+
+        /* CARDS */
+        .formations-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px,1fr)); gap: 1.6rem; }
+        .formation-card { background: linear-gradient(145deg, rgba(19,22,33,.95), rgba(13,15,22,.95)); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; transition: transform .3s, box-shadow .3s, border-color .3s; cursor: pointer; }
+        .formation-card:hover { transform: translateY(-8px); box-shadow: 0 24px 60px rgba(0,0,0,.55); border-color: rgba(240,180,41,.35); }
+        .card-thumb { position: relative; height: 185px; overflow: hidden; }
+        .card-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s; filter: brightness(.7) saturate(.8); }
+        .formation-card:hover .card-thumb img { transform: scale(1.06); }
+        .card-badge { position: absolute; top: 12px; left: 12px; font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: .25rem .75rem; border-radius: 50px; }
+        .badge-debut  { background: rgba(0,210,198,.2); color: var(--teal); border: 1px solid rgba(0,210,198,.3); }
+        .badge-inter  { background: rgba(240,180,41,.15); color: var(--gold); border: 1px solid rgba(240,180,41,.3); }
+        .badge-avance { background: rgba(255,94,91,.15);  color: var(--coral); border: 1px solid rgba(255,94,91,.3); }
+        .badge-all    { background: rgba(255,255,255,.1); color: #fff; border: 1px solid rgba(255,255,255,.2); }
+        .card-body { padding: 1.5rem 1.5rem 1rem; flex: 1; display: flex; flex-direction: column; }
+        .card-icon { font-size: 1.6rem; margin-bottom: .6rem; }
+        .card-title { font-family: var(--font-h); font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: .6rem; line-height: 1.25; }
+        .card-desc { font-size: .875rem; color: var(--muted); line-height: 1.55; flex: 1; }
+        .card-skills { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: 1rem; }
+        .skill-tag { font-size: .72rem; font-weight: 600; letter-spacing: .04em; padding: .2rem .65rem; border-radius: 50px; background: rgba(255,255,255,.06); color: var(--muted); border: 1px solid var(--border); }
+        .card-footer { padding: 1rem 1.5rem 1.4rem; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border); }
+        .card-meta { font-size: .78rem; color: var(--muted); }
+        .card-meta strong { color: var(--text); font-weight: 600; display: block; }
+        .card-price { font-family: var(--font-h); font-size: 1.25rem; font-weight: 800; color: var(--gold); }
+        .card-duration { font-size: .73rem; color: var(--muted); margin-top: .1rem; text-align: right; }
+
+        /* MODAL */
+        .modal-overlay { position: fixed; inset: 0; z-index: 500; background: rgba(0,0,0,.8); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; padding: 2rem; }
+        .modal-overlay.open { display: flex; }
+        .modal { background: #0e101a; border: 1px solid rgba(255,255,255,.1); border-radius: 18px; width: 100%; max-width: 760px; max-height: 90vh; overflow-y: auto; animation: modalIn .3s ease; }
+        @keyframes modalIn { from{opacity:0;transform:scale(.95)} to{opacity:1;transform:scale(1)} }
+        .modal-header { position: sticky; top: 0; background: #0e101a; padding: 1.6rem 2rem 1.2rem; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; z-index: 2; }
+        .modal-close { background: rgba(255,255,255,.06); border: none; color: var(--muted); width: 36px; height: 36px; border-radius: 50%; cursor: pointer; font-size: 1.1rem; flex-shrink: 0; transition: background .2s, color .2s; }
+        .modal-close:hover { background: rgba(255,255,255,.14); color: #fff; }
+        .modal-body { padding: 2rem; }
+        .modal-tag { display: inline-block; font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); margin-bottom: .7rem; }
+        .modal-title { font-family: var(--font-h); font-size: 1.6rem; font-weight: 800; line-height: 1.2; margin-bottom: .6rem; }
+        .modal-desc { color: var(--muted); margin-bottom: 1.8rem; font-size: .95rem; }
+        .modal-meta-row { display: flex; flex-wrap: wrap; gap: 1.2rem; margin-bottom: 2rem; }
+        .modal-meta-item { display: flex; align-items: center; gap: .5rem; font-size: .85rem; color: var(--muted); }
+        .curriculum-title { font-family: var(--font-h); font-size: 1.05rem; font-weight: 700; color: #fff; margin-bottom: 1.2rem; padding-bottom: .6rem; border-bottom: 1px solid var(--border); }
+        .week-block { margin-bottom: .9rem; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+        .week-header { display: flex; align-items: center; justify-content: space-between; padding: .85rem 1.2rem; cursor: pointer; background: rgba(255,255,255,.03); transition: background .2s; }
+        .week-header:hover { background: rgba(255,255,255,.06); }
+        .week-num { font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); margin-right: .9rem; }
+        .week-name { font-size: .93rem; font-weight: 600; color: var(--text); flex: 1; }
+        .week-chevron { font-size: .8rem; color: var(--muted); transition: transform .25s; }
+        .week-block.open .week-chevron { transform: rotate(180deg); }
+        .week-content { display: none; padding: .8rem 1.2rem 1rem; border-top: 1px solid var(--border); }
+        .week-block.open .week-content { display: block; }
+        .week-content ul { list-style: none; }
+        .week-content li { font-size: .87rem; color: var(--muted); padding: .35rem 0 .35rem 1.4rem; position: relative; border-bottom: 1px solid rgba(255,255,255,.04); }
+        .week-content li:last-child { border-bottom: none; }
+        .week-content li::before { content: '▹'; position: absolute; left: 0; color: var(--teal); }
+        .modal-outcomes { margin-top: 2rem; padding: 1.3rem 1.5rem; background: rgba(240,180,41,.06); border: 1px solid rgba(240,180,41,.2); border-radius: 12px; }
+        .modal-outcomes h4 { font-family: var(--font-h); font-size: .92rem; font-weight: 700; color: var(--gold); margin-bottom: .9rem; }
+        .modal-outcomes ul { list-style: none; }
+        .modal-outcomes li { font-size: .87rem; color: var(--text); padding: .3rem 0 .3rem 1.4rem; position: relative; }
+        .modal-outcomes li::before { content: '✓'; position: absolute; left: 0; color: var(--gold); font-weight: 700; }
+        .modal-footer { padding: 1.5rem 2rem; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+        .modal-price .price { font-family: var(--font-h); font-size: 2rem; font-weight: 800; color: var(--gold); }
+        .modal-price .price-note { font-size: .78rem; color: var(--muted); }
+        .btn-enroll { padding: .8rem 2rem; background: var(--gold); color: #07080d; font-weight: 700; font-size: .95rem; border: none; border-radius: 50px; cursor: pointer; transition: all .25s; font-family: var(--font-b); }
+        .btn-enroll:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(240,180,41,.4); }
+
+        /* ABOUT */
+        #about { background: var(--bg2); }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px,1fr)); gap: 1.5rem; margin-top: 3.5rem; }
+        .feature-card { padding: 1.8rem; border: 1px solid var(--border); border-radius: var(--radius); background: rgba(255,255,255,.025); transition: border-color .3s, transform .3s; }
+        .feature-card:hover { border-color: rgba(240,180,41,.3); transform: translateY(-4px); }
+        .feature-icon { font-size: 2rem; margin-bottom: 1rem; }
+        .feature-card h4 { font-family: var(--font-h); font-size: 1rem; font-weight: 700; margin-bottom: .5rem; }
+        .feature-card p { font-size: .875rem; color: var(--muted); line-height: 1.55; }
+
+        /* TESTIMONIALS */
+        .testimonials-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap: 1.4rem; }
+        .testi-card { padding: 1.6rem; border: 1px solid var(--border); border-radius: var(--radius); background: rgba(255,255,255,.02); }
+        .testi-stars { color: var(--gold); font-size: .95rem; margin-bottom: .8rem; }
+        .testi-text { font-size: .88rem; color: var(--muted); line-height: 1.6; margin-bottom: 1rem; font-style: italic; }
+        .testi-author { display: flex; align-items: center; gap: .8rem; }
+        .testi-avatar { width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg, var(--gold), var(--coral)); display: flex; align-items: center; justify-content: center; font-family: var(--font-h); font-size: .9rem; font-weight: 800; color: #07080d; flex-shrink: 0; }
+        .testi-name { font-size: .85rem; font-weight: 600; }
+        .testi-role { font-size: .75rem; color: var(--muted); }
+
+        /* CONTACT */
+        #contact { background: var(--bg2); }
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+        .contact-left h3 { font-family: var(--font-h); font-size: 2rem; font-weight: 800; margin-bottom: 1rem; }
+        .contact-left p { color: var(--muted); font-size: .95rem; line-height: 1.65; margin-bottom: 2rem; }
+        .contact-item { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.3rem; border: 1px solid var(--border); border-radius: 10px; margin-bottom: .9rem; background: rgba(255,255,255,.025); transition: border-color .25s; }
+        .contact-item:hover { border-color: rgba(240,180,41,.3); }
+        .ci-icon { width: 40px; height: 40px; border-radius: 10px; background: rgba(240,180,41,.12); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+        .ci-text strong { font-size: .82rem; color: var(--muted); display: block; text-transform: uppercase; letter-spacing: .07em; }
+        .ci-text span { font-size: .95rem; color: var(--text); }
+        .social-row { display: flex; gap: .8rem; margin-top: 2rem; }
+        .soc-btn { width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--border); background: rgba(255,255,255,.04); color: var(--muted); display: flex; align-items: center; justify-content: center; font-size: 1rem; text-decoration: none; font-weight: 700; transition: all .25s; }
+        .soc-btn:hover { border-color: var(--gold); color: var(--gold); background: rgba(240,180,41,.08); transform: translateY(-3px); }
+        .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .form-group { display: flex; flex-direction: column; gap: .45rem; }
+        .form-group label { font-size: .78rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+        .form-group input, .form-group select, .form-group textarea { background: rgba(255,255,255,.04); border: 1px solid var(--border); border-radius: 10px; padding: .75rem 1rem; color: var(--text); font-family: var(--font-b); font-size: .9rem; transition: border-color .25s; outline: none; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: rgba(240,180,41,.5); }
+        .form-group select option { background: #0e101a; }
+        .form-group textarea { resize: vertical; min-height: 110px; }
+        .form-submit { padding: .85rem; background: var(--gold); color: #07080d; font-weight: 700; font-size: .95rem; border: none; border-radius: 50px; cursor: pointer; transition: all .25s; font-family: var(--font-b); }
+        .form-submit:hover { box-shadow: 0 8px 28px rgba(240,180,41,.4); }
+        .form-msg { display: none; text-align: center; padding: .75rem; border-radius: 10px; font-size: .88rem; font-weight: 600; }
+        .form-msg.success { background: rgba(0,210,198,.1); color: var(--teal); border: 1px solid rgba(0,210,198,.2); display: block; }
+
+        footer { padding: 2.5rem 6%; text-align: center; border-top: 1px solid var(--border); color: var(--muted); font-size: .82rem; }
+        footer span { color: var(--gold); }
+
+        .wa-float { position: fixed; bottom: 28px; right: 28px; z-index: 300; width: 58px; height: 58px; border-radius: 50%; background: #25d366; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 28px rgba(37,211,102,.4); text-decoration: none; font-size: 1.7rem; animation: bounce 2s 3s ease infinite; }
+        @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+
+        @media(max-width:900px){
+            .nav-links,.nav-cta{ display:none; }
+            .hamburger{ display:flex; }
+            .contact-grid{ grid-template-columns:1fr; gap:2.5rem; }
+            .form-row{ grid-template-columns:1fr; }
+        }
+        @media(max-width:600px){
+            .hero-stats{ gap:2rem; }
+            .formations-grid{ grid-template-columns:1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="particles-canvas"></canvas>
+
+<nav id="main-nav">
+    <div class="logo" onclick="scrollTo('home')">
+        <svg class="logo-svg" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="20" cy="20" r="18" stroke="url(#lg)" stroke-width="2"/>
+            <path d="M14 20h12M20 14v12" stroke="url(#lg)" stroke-width="2.5" stroke-linecap="round"/>
+            <defs><linearGradient id="lg" x1="4" y1="4" x2="36" y2="36" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#f0b429"/><stop offset="1" stop-color="#ff5e5b"/>
+            </linearGradient></defs>
+        </svg>
+        Genius Academy
+    </div>
+    <ul class="nav-links">
+        <li><a onclick="scrollTo('home')">Accueil</a></li>
+        <li><a onclick="scrollTo('formations')">Formations</a></li>
+        <li><a onclick="scrollTo('about')">À propos</a></li>
+        <li><a onclick="scrollTo('contact')">Contact</a></li>
+    </ul>
+    <button class="nav-cta" onclick="scrollTo('formations')">S'inscrire</button>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+    </button>
+</nav>
+
+<div class="mobile-nav" id="mobile-nav">
+    <a onclick="scrollTo('home');closeMobile()">Accueil</a>
+    <a onclick="scrollTo('formations');closeMobile()">Formations</a>
+    <a onclick="scrollTo('about');closeMobile()">À propos</a>
+    <a onclick="scrollTo('contact');closeMobile()">Contact</a>
+    <button class="mobile-enroll" onclick="scrollTo('formations');closeMobile()">S'inscrire maintenant</button>
+</div>
+
+<section id="home">
+    <div class="hero">
+        <div>
+            <div class="hero-tag"><div class="hero-dot"></div>Kara, Togo · En ligne &amp; présentiel</div>
+            <h1>Apprenez. Pratiquez.<br/>Excellez.</h1>
+            <p class="hero-sub">Des formations pratiques en informatique et sciences pour étudiants et professionnels. Du débutant complet jusqu'à l'expertise avancée.</p>
+            <div class="hero-actions">
+                <button class="btn btn-gold" onclick="scrollTo('formations')">Voir les formations</button>
+                <button class="btn btn-ghost" onclick="scrollTo('about')">Notre approche</button>
+            </div>
+            <div class="hero-stats">
+                <div class="stat"><div class="stat-n">9</div><div class="stat-l">Formations</div></div>
+                <div class="stat"><div class="stat-n">150h+</div><div class="stat-l">De contenu</div></div>
+                <div class="stat"><div class="stat-n">100%</div><div class="stat-l">Pratique</div></div>
+                <div class="stat"><div class="stat-n">∞</div><div class="stat-l">Support inclus</div></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="formations">
+    <div class="section-inner">
+        <div class="section-head">
+            <div class="section-label">Catalogue</div>
+            <h2 class="section-title">Nos Formations</h2>
+            <p class="section-desc">Chaque programme est conçu avec un objectif clair : vous rendre opérationnel le plus rapidement possible.</p>
+        </div>
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all">Tous</button>
+            <button class="filter-btn" data-filter="debutant">Débutant</button>
+            <button class="filter-btn" data-filter="intermediaire">Intermédiaire</button>
+            <button class="filter-btn" data-filter="avance">Avancé</button>
+        </div>
+        <div class="formations-grid" id="formations-grid"></div>
+    </div>
+</section>
+
+<section id="about">
+    <div class="section-inner">
+        <div class="section-head">
+            <div class="section-label">Notre approche</div>
+            <h2 class="section-title">Pourquoi choisir<br/>Genius Academy ?</h2>
+            <p class="section-desc">Une pédagogie orientée résultats, pas seulement la théorie.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card"><div class="feature-icon">🎯</div><h4>100% orienté pratique</h4><p>Chaque session comprend des exercices concrets, des projets réels et des cas d'application issus du monde scientifique et professionnel.</p></div>
+            <div class="feature-card"><div class="feature-icon">👨‍🏫</div><h4>Encadrement personnalisé</h4><p>Pas de grandes classes anonymes. Suivi individuel, corrections détaillées et sessions de questions-réponses dédiées.</p></div>
+            <div class="feature-card"><div class="feature-icon">📁</div><h4>Ressources durables</h4><p>Accès permanent aux supports, notebooks, codes sources et exercices corrigés. Votre apprentissage ne s'arrête pas à la dernière session.</p></div>
+            <div class="feature-card"><div class="feature-icon">🏆</div><h4>Certificat reconnu</h4><p>À la fin de chaque formation, obtenez un certificat de complétion validant vos compétences et valorisable sur votre CV.</p></div>
+            <div class="feature-card"><div class="feature-icon">🌍</div><h4>Flexible &amp; accessible</h4><p>Formation en présentiel à Kara ou à distance. Horaires adaptés aux étudiants et aux professionnels en activité.</p></div>
+            <div class="feature-card"><div class="feature-icon">🔗</div><h4>Communauté active</h4><p>Intégrez un réseau d'apprenants et d'anciens élèves. Partagez, collaborez et évoluez ensemble même après la formation.</p></div>
+        </div>
+        <div style="margin-top:5rem">
+            <div class="section-label" style="margin-bottom:.75rem">Témoignages</div>
+            <h3 class="section-title" style="margin-bottom:2.5rem">Ce qu'ils disent</h3>
+            <div class="testimonials-row">
+                <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-text">« La formation Python m'a permis d'automatiser mes analyses de données en TP. Ce qui me prenait 2h ne prend plus que 10 minutes. »</p><div class="testi-author"><div class="testi-avatar">AK</div><div><div class="testi-name">Afi K.</div><div class="testi-role">Étudiante en Chimie, Université de Kara</div></div></div></div>
+                <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-text">« J'ai suivi le parcours Web Fullstack sans aucune base. Aujourd'hui j'ai livré deux projets pour des clients locaux. Concret et efficace. »</p><div class="testi-author"><div class="testi-avatar">KM</div><div><div class="testi-name">Kodjo M.</div><div class="testi-role">Freelance développeur web</div></div></div></div>
+                <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-text">« Le cours sur la modélisation m'a donné les outils pour ma thèse. J'ai pu simuler des systèmes que je ne savais pas comment aborder avant. »</p><div class="testi-author"><div class="testi-avatar">IB</div><div><div class="testi-name">Ismaël B.</div><div class="testi-role">Doctorant en Physique</div></div></div></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="contact">
+    <div class="section-inner">
+        <div class="contact-grid">
+            <div class="contact-left">
+                <div class="section-label">Contact</div>
+                <h3>Parlons de votre projet d'apprentissage</h3>
+                <p>Une question sur une formation ? Besoin d'un parcours sur mesure ? Contactez-nous, nous répondons sous 24h.</p>
+                <div class="contact-item"><div class="ci-icon">📧</div><div class="ci-text"><strong>E-mail</strong><span>Barry.StarLabs.Allen@gmail.com</span></div></div>
+                <div class="contact-item"><div class="ci-icon">📱</div><div class="ci-text"><strong>WhatsApp / Appel</strong><span>+228 70 81 79 35</span></div></div>
+                <div class="contact-item"><div class="ci-icon">📍</div><div class="ci-text"><strong>Localisation</strong><span>Kara, Togo · En ligne disponible</span></div></div>
+                <div class="social-row">
+                    <a class="soc-btn" href="https://wa.me/22870817935?text=Bonjour%2C%20je%20souhaite%20des%20informations%20sur%20vos%20formations." title="WhatsApp">W</a>
+                    <a class="soc-btn" href="#" title="Facebook">f</a>
+                    <a class="soc-btn" href="#" title="Twitter / X">𝕏</a>
+                    <a class="soc-btn" href="#" title="LinkedIn">in</a>
+                </div>
+            </div>
+            <div>
+                <div class="contact-form">
+                    <div class="form-row">
+                        <div class="form-group"><label>Prénom</label><input type="text" id="f-prenom" placeholder="Votre prénom"/></div>
+                        <div class="form-group"><label>Nom</label><input type="text" id="f-nom" placeholder="Votre nom"/></div>
+                    </div>
+                    <div class="form-group"><label>E-mail</label><input type="email" id="f-email" placeholder="votre@email.com"/></div>
+                    <div class="form-group">
+                        <label>Formation souhaitée</label>
+                        <select id="f-formation">
+                            <option value="">— Choisir —</option>
+                            <option>Python pour la Science</option>
+                            <option>Data Analytics &amp; Visualisation</option>
+                            <option>Modélisation &amp; Simulation Numérique</option>
+                            <option>IA &amp; Machine Learning Appliqués</option>
+                            <option>Automatisation &amp; Scripting Python</option>
+                            <option>Maîtrise Bureautique Pro</option>
+                            <option>Programmation C &amp; Systèmes</option>
+                            <option>Développement Web Full-Stack</option>
+                            <option>Parcours Expert Intégral</option>
+                        </select>
+                    </div>
+                    <div class="form-group"><label>Message</label><textarea id="f-message" placeholder="Votre question…"></textarea></div>
+                    <button class="form-submit" onclick="submitForm()">Envoyer →</button>
+                    <div class="form-msg" id="form-msg">✓ Message reçu ! Nous vous répondrons dans les 24h.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <p>© 2025 <span>Genius Academy</span> · Kara, Togo · Tous droits réservés</p>
+    <p style="margin-top:.5rem">Formations en informatique et sciences · <a href="mailto:Barry.StarLabs.Allen@gmail.com" style="color:var(--gold);text-decoration:none">Barry.StarLabs.Allen@gmail.com</a></p>
+</footer>
+
+<a class="wa-float" href="https://wa.me/22870817935?text=Bonjour%2C%20je%20veux%20en%20savoir%20plus%20sur%20les%20formations%20Genius%20Academy." target="_blank" title="WhatsApp">💬</a>
+
+<div class="modal-overlay" id="modal-overlay" onclick="closeModalOverlay(event)">
+    <div class="modal" id="modal">
+        <div class="modal-header">
+            <div>
+                <div class="modal-tag" id="m-tag"></div>
+                <div class="modal-title" id="m-title"></div>
+            </div>
+            <button class="modal-close" onclick="closeModal()">✕</button>
+        </div>
+        <div class="modal-body">
+            <p class="modal-desc" id="m-desc"></p>
+            <div class="modal-meta-row" id="m-meta"></div>
+            <div class="curriculum-title">Programme détaillé</div>
+            <div id="m-curriculum"></div>
+            <div class="modal-outcomes" id="m-outcomes"></div>
+        </div>
+        <div class="modal-footer">
+            <div class="modal-price">
+                <div class="price" id="m-price"></div>
+                <div class="price-note">Paiement en plusieurs fois possible</div>
+            </div>
+            <button class="btn-enroll" id="m-enroll-btn">S'inscrire maintenant →</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    /* ── DATA ─────────────────────────────────────────────── */
+    const FORMATIONS = [
+        {id:1,icon:"🐍",title:"Python pour la Science",level:"debutant",levelLabel:"Débutant",duration:"6 semaines",hours:"30h",price:"25 000 FCFA",audience:"L1-L2, débutants complets",image:"https://images.unsplash.com/photo-1526379095098-d400fd0bf935?w=800&q=80",skills:["Python 3","NumPy","Matplotlib","Jupyter"],desc:"Maîtrisez Python dans un contexte scientifique : des premiers scripts jusqu'à vos premières analyses de données. La formation idéale pour tout étudiant en sciences voulant automatiser ses calculs.",curriculum:[{week:"Semaine 1",name:"Environnement & Fondamentaux",items:["Installation Python, Anaconda, Jupyter Notebook","Variables, types, opérateurs","Entrées/sorties, f-strings, formatage"]},{week:"Semaine 2",name:"Structures de contrôle & Fonctions",items:["Conditions if/elif/else","Boucles for et while","Définition et usage des fonctions","Modules et portée des variables"]},{week:"Semaine 3",name:"Structures de données",items:["Listes, tuples, dictionnaires, sets","Compréhensions de listes","Manipulation de chaînes de caractères","Lecture/écriture de fichiers"]},{week:"Semaine 4",name:"NumPy – Calcul Scientifique",items:["Tableaux ndarray, indexation, slicing","Opérations vectorisées, algèbre linéaire","Statistiques descriptives avec NumPy","Application : mesures expérimentales"]},{week:"Semaine 5",name:"Matplotlib – Visualisation",items:["Graphiques linéaires, dispersion, histogrammes","Personnalisation : titres, axes, légendes","Sous-graphiques (subplots)","Exportation en haute résolution"]},{week:"Semaine 6",name:"Projet Final",items:["Mini-projet : analyse d'un jeu de données scientifique réel","Rapport Jupyter commenté","Révisions, Q&R et remise du certificat"]}],outcomes:["Écrire des scripts Python pour vos calculs","Manipuler des données numériques avec NumPy","Produire des graphiques de qualité publication","Automatiser des tâches répétitives"],googleFormUrl:"https://docs.google.com/forms/d/e/1FAIpQLSdRITrTkr72c5McbylG13wi2l0Elx3cvrh-V0OzoNt1IdPnjw/viewform?entry.hj99tb2=Python%20pour%20la%20Science"},
+        {id:2,icon:"📊",title:"Data Analytics & Visualisation",level:"intermediaire",levelLabel:"Intermédiaire",duration:"8 semaines",hours:"48h",price:"30 000 FCFA",audience:"L3-M1, techniciens de labo",image:"https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",skills:["Pandas","Matplotlib","Seaborn","SciPy"],desc:"Transformez des données brutes en insights exploitables. De la collecte au nettoyage en passant par l'analyse statistique et la visualisation avancée. Axé sur les données expérimentales.",curriculum:[{week:"Semaines 1-2",name:"Pandas – Maîtrise des données",items:["DataFrame : import CSV/Excel, indexation, filtrage","Gestion des valeurs manquantes et doublons","GroupBy, pivots et agrégations","Fusion de tables et jointures"]},{week:"Semaine 3",name:"Nettoyage & Préparation",items:["Détection et traitement des valeurs aberrantes","Normalisation et encodage","Pipeline de pré-traitement reproductible","Données expérimentales réelles"]},{week:"Semaines 4-5",name:"Statistiques exploratoires",items:["Statistiques descriptives avancées","Tests d'hypothèse : t-test, chi-2, ANOVA","Corrélations et régressions linéaires","Intervalles de confiance et p-values"]},{week:"Semaines 6-7",name:"Visualisations avancées",items:["Seaborn : heatmaps, boxplots, violin plots","Plotly : graphiques interactifs","Figures multi-panneaux pour publications","Palettes accessibles et normes éditoriales"]},{week:"Semaine 8",name:"Projet capstone",items:["Analyse complète d'un dataset scientifique","Rapport interactif avec Jupyter","Présentation des résultats et certification"]}],outcomes:["Charger, nettoyer et structurer n'importe quel dataset","Appliquer les tests statistiques adaptés","Produire des visualisations prêtes à publier","Automatiser un pipeline d'analyse reproductible"],googleFormUrl:"https://docs.google.com/forms/d/e/1FAIpQLSdRITrTkr72c5McbylG13wi2l0Elx3cvrh-V0OzoNt1IdPnjw/viewform?entry.hj99tb2=Data%20Analytics"},
+        {id:3,icon:"🔬",title:"Modélisation & Simulation Numérique",level:"avance",levelLabel:"Avancé",duration:"10 semaines",hours:"60h",price:"35 000 FCFA",audience:"M1-M2, doctorants, ingénieurs",image:"https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800&q=80",skills:["SciPy","SymPy","Matplotlib 3D","Monte Carlo"],desc:"Résolvez des équations différentielles, modélisez des systèmes dynamiques et simulez des phénomènes physiques avec Python. Un incontournable pour chercheurs et ingénieurs.",curriculum:[{week:"Semaines 1-2",name:"Fondements & SciPy",items:["Rappels : algèbre linéaire, calcul différentiel","SciPy : interpolation, intégration numérique","Systèmes d'équations non-linéaires","SymPy : calcul symbolique"]},{week:"Semaines 3-4",name:"Équations Différentielles (EDO)",items:["Méthode d'Euler, Runge-Kutta","solve_ivp de SciPy : paramètres et tolérance","Systèmes couplés : oscillateur, proie-prédateur","Stabilité et comportement asymptotique"]},{week:"Semaines 5-6",name:"Systèmes Dynamiques & Chaos",items:["Attracteurs, portraits de phase","Pendule, attracteur de Lorenz","Bifurcations et sensibilité aux conditions initiales","Visualisations 3D avec Matplotlib"]},{week:"Semaines 7-8",name:"Méthodes de Monte Carlo",items:["Génération de nombres aléatoires et distributions","Intégration Monte Carlo, estimation de π","Simulation de processus stochastiques","Applications : diffusion, marche aléatoire"]},{week:"Semaines 9-10",name:"Projet de simulation",items:["Choix d'un système physique à simuler","Implémentation complète avec documentation","Validation et comparaison avec données expérimentales","Rapport scientifique et soutenance"]}],outcomes:["Résoudre numériquement des EDO complexes","Simuler des systèmes dynamiques réels","Quantifier les incertitudes par Monte Carlo","Produire un rapport scientifique reproductible"],googleFormUrl:"https://docs.google.com/forms/d/e/1FAIpQLSdRITrTkr72c5McbylG13wi2l0Elx3cvrh-V0OzoNt1IdPnjw/viewform?entry.hj99tb2=Mod%C3%A9lisation"},
+        {id:4,icon:"🤖",title:"IA & Machine Learning Appliqués",level:"avance",levelLabel:"Avancé",duration:"12 semaines",hours:"72h",price:"40 000 FCFA",audience:"M2, doctorants, data scientists",image:"https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80",skills:["Scikit-learn","TensorFlow","Keras","XGBoost"],desc:"Exploitez les algorithmes de machine learning pour prédire, classifier et découvrir des patterns dans vos données scientifiques. De la régression logistique aux réseaux de neurones.",curriculum:[{week:"Semaines 1-2",name:"Fondements du ML",items:["Taxonomie ML : supervisé, non-supervisé, renforcement","Données d'entraînement/test, validation croisée","Biais-variance, surapprentissage, régularisation","Pipeline sklearn : prétraitement + modèle"]},{week:"Semaines 3-4",name:"Apprentissage supervisé",items:["Régression linéaire, ridge, lasso","Classification : logistique, KNN, SVM, arbres","Métriques : précision, rappel, F1, AUC-ROC","Projet : prédiction de propriétés physico-chimiques"]},{week:"Semaines 5-6",name:"Méthodes d'ensemble",items:["Random Forest, Gradient Boosting, XGBoost","Feature importance et sélection de variables","Tuning : GridSearchCV, RandomizedSearch","Interprétabilité avec SHAP"]},{week:"Semaines 7-8",name:"Apprentissage non-supervisé",items:["Clustering : K-Means, DBSCAN, hiérarchique","Réduction de dimension : PCA, t-SNE, UMAP","Détection d'anomalies","Applications : classification de spectres"]},{week:"Semaines 9-11",name:"Réseaux de neurones (Keras)",items:["Perceptron multicouche : architecture, activations","Optimiseurs, learning rate scheduling","Dropout, Batch Normalization","CNN pour images scientifiques","Entraînement et callbacks"]},{week:"Semaine 12",name:"Projet Final IA",items:["Problème scientifique réel choisi par l'apprenant","Pipeline complet : données → modèle → rapport","Présentation devant le groupe","Certificat avancé en ML scientifique"]}],outcomes:["Construire et évaluer des modèles ML complets","Choisir l'algorithme adapté à votre problème","Entraîner des réseaux de neurones avec Keras","Interpréter et expliquer vos modèles"],googleFormUrl:"https://docs.google.com/forms/d/e/1FAIpQLSdRITrTkr72c5McbylG13wi2l0Elx3cvrh-V0OzoNt1IdPnjw/viewform?entry.hj99tb2=ML"},
+        {id:5,icon:"⚡",title:"Automatisation & Scripting Python",level:"intermediaire",levelLabel:"Intermédiaire",duration:"8 semaines",hours:"40h",price:"32 000 FCFA",audience:"Techniciens, chercheurs, assistants labo",image:"https://images.unsplash.com/photo-1518432031352-d6fc5c10da5a?w=800&q=80",skills:["Python","openpyxl","python-docx","Selenium"],desc:"Supprimez les tâches répétitives une bonne fois pour toutes. Scripts d'automatisation, génération de rapports, pipelines d'analyse : travaillez plus vite, avec moins d'erreurs.",curriculum:[{week:"Semaines 1-2",name:"Automatisation de fichiers",items:["os, pathlib : manipulation de fichiers et dossiers","Renommage et tri automatiques en masse","Traitement CSV/Excel avec openpyxl","Agrégation de données multi-fichiers"]},{week:"Semaines 3-4",name:"Génération de rapports",items:["python-docx : rapports Word formatés","ReportLab : génération de PDF personnalisés","Insertion automatique de tableaux et graphiques","Templates de rapports scientifiques réutilisables"]},{week:"Semaines 5-6",name:"Collecte de données & Scraping",items:["Requêtes HTTP avec requests","BeautifulSoup : parsing HTML, extraction de tables","Selenium : interfaces web dynamiques","Accès à des API scientifiques (PubChem, etc.)"]},{week:"Semaines 7-8",name:"Pipelines & Scheduling",items:["Planification avec schedule et cron","Journalisation (logging) et gestion d'erreurs robuste","Envoi automatique de résultats par e-mail","Projet : pipeline complet adapté à votre labo"]}],outcomes:["Automatiser 80% de vos tâches répétitives","Générer des rapports Word/PDF en un clic","Collecter automatiquement des données en ligne","Mettre en place un pipeline d'analyse complet"],googleFormUrl:"https://docs.google.com/forms/d/e/1FAIpQLSdRITrTkr72c5McbylG13wi2l0Elx3cvrh-V0OzoNt1IdPnjw/viewform?entry.hj99tb2=Automatisation"},
+        {id:6,icon:"💼",title:"Maîtrise Bureautique Pro",level:"debutant",levelLabel:"Débutant",duration:"6 semaines",hours:"36h",price:"25 000 FCFA",audience:"Tous profils, étudiants, admins",image:"https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&q=80",skills:["Word","Excel","PowerPoint","Google Workspace"],desc:"Dominez Word, Excel, PowerPoint et Google Workspace pour produire des documents professionnels, des tableaux de bord et des présentations percutantes au quotidien.",curriculum:[{week:"Semaine 1",name:"Microsoft Word – Documents Pro",items:["Styles, titres, numérotation automatique","Table des matières, index, légendes","Mailing et fusion avec Excel","Suivi des modifications et révisions"]},{week:"Semaines 2-3",name:"Excel – Essentiel → Avancé",items:["Formules avancées : INDEX/MATCH, SI.ENS, RECHERCHEX","Tableaux croisés dynamiques","Graphiques dynamiques et sparklines","Validation des données, mise en forme conditionnelle","Introduction aux macros VBA simples"]},{week:"Semaine 4",name:"PowerPoint – Design & Impact",items:["Principes du design de présentation","Masques de diapositive et thèmes personnalisés","Animations et transitions professionnelles","Narration vidéo et exportation"]},{week:"Semaine 5",name:"Google Workspace",items:["Docs, Sheets, Slides : bases et collaboration","Google Forms : sondages et collecte de données","Google Drive : organisation et partage sécurisé","Automations avec Google Apps Script"]},{week:"Semaine 6",name:"Projet complet",items:["Rapport + tableur + présentation sur un cas réel","Simulation : rapport de stage, budget, soutenance","Retours détaillés et certification"]}],outcomes:["Produire des rapports Word professionnels","Maîtriser les formules et TCD Excel","Créer des présentations percutantes","Collaborer efficacement sur Google Workspace"],googleFormUrl:"https://docs.google.com/forms/d/e/1FAIpQLSdRITrTkr72c5McbylG13wi2l0Elx3cvrh-V0OzoNt1IdPnjw/viewform?entry.hj99tb2=Bureautique"},
+        {id:7,icon:"⚙️",title:"Programmation C & Systèmes",level:"debutant",levelLabel:"Débutant → Intermédiaire",duration:"8 semaines",hours:"48h",price:"28 000 FCFA",audience:"L1-L3 info, tout profil",image:"https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80",skills:["C","GCC","GDB","Structures de données"],desc:"Comprenez vraiment comment fonctionne un ordinateur en apprenant le C. Gestion de la mémoire, structures de données, algorithmes : des bases solides pour tout ingénieur ou informaticien.",curriculum:[{week:"Semaine 1",name:"Environnement & Syntaxe C",items:["Installation GCC/MinGW, compilation, exécution","Variables, types, opérateurs, casting","Entrées/sorties : printf, scanf, getchar"]},{week:"Semaine 2",name:"Contrôle & Fonctions",items:["Conditions, switch, boucles (for, while, do-while)","Fonctions : prototypes, passage par valeur/référence","Récursivité et variables locales/globales"]},{week:"Semaine 3",name:"Tableaux, Chaînes & Pointeurs",items:["Tableaux statiques et chaînes de caractères","Pointeurs : adresses, déréférencement, arithmétique","Relation tableaux-pointeurs, string.h"]},{week:"Semaine 4",name:"Gestion de la mémoire",items:["Pile vs Tas : allocation statique vs dynamique","malloc, calloc, realloc, free","Fuites mémoire et debugging avec GDB","Bonnes pratiques de gestion mémoire"]},{week:"Semaines 5-6",name:"Structures de données",items:["Structures (struct) et unions","Listes chaînées simples et doublement chaînées","Piles (stack) et files (queue)","Arbres binaires de recherche"]},{week:"Semaine 7",name:"Fichiers & Modules",items:["fopen, fread, fwrite, fprintf","Fichiers binaires vs texte","Compilation multi-fichiers, Makefiles","Préprocesseur C : #define, #include"]},{week:"Semaine 8",name:"Projet système",items:["Mini-application C complète","Code documenté, Makefile, tests","Code review et certification"]}],outcomes:["Programmer en C de manière structurée et sécurisée","Gérer la mémoire manuellement sans erreurs","Implémenter les structures de données classiques","Développer des outils système en ligne de commande"],googleFormUrl:"https://docs.google.com/forms/d/e/1FAIpQLSdRITrTkr72c5McbylG13wi2l0Elx3cvrh-V0OzoNt1IdPnjw/viewform?entry.hj99tb2=Langage%20C"},
+        {id:8,icon:"🌐",title:"Développement Web Full-Stack",level:"intermediaire",levelLabel:"Intermédiaire",duration:"12 semaines",hours:"72h",price:"38 000 FCFA",audience:"Toute personne souhaitant dev web",image:"https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&q=80",skills:["HTML/CSS","JavaScript","React","Node.js"],desc:"Créez des applications web modernes et déployez-les en ligne. HTML, CSS, JavaScript, React, Node.js : devenez développeur full-stack opérationnel et construisez votre portfolio.",curriculum:[{week:"Semaines 1-2",name:"HTML5 & CSS3 – Fondations",items:["Structure sémantique HTML5","CSS : sélecteurs, box model, flexbox, grid","Design responsive : media queries, mobile-first","Accessibilité et bonnes pratiques SEO"]},{week:"Semaines 3-4",name:"JavaScript Moderne (ES6+)",items:["Variables (let/const), arrow functions, template literals","Tableaux et objets : déstructuration, spread, rest","DOM : sélection, événements, manipulation","Fetch API et promesses (async/await)"]},{week:"Semaine 5",name:"Git & Workflow",items:["Git : init, add, commit, push, branch","GitHub : dépôts, pull requests","Conventions de commits, .gitignore","Déploiement GitHub Pages"]},{week:"Semaines 6-8",name:"React – Interfaces dynamiques",items:["JSX, composants fonctionnels, props","useState, useEffect, useContext","React Router : navigation SPA","Appels API, gestion d'état","Projet : application React complète"]},{week:"Semaines 9-10",name:"Node.js & Express – Back-end",items:["Serveur HTTP avec Node.js et Express","Routes REST, middlewares","Authentification JWT","MongoDB avec Mongoose"]},{week:"Semaines 11-12",name:"Déploiement & Projet Final",items:["Variables d'environnement, sécurité","Déploiement : Vercel (front), Render (back)","Connexion front ↔ back en production","Projet fullstack complet + portfolio GitHub"]}],outcomes:["Créer des interfaces web responsives et modernes","Développer des applications React interactives","Construire une API REST avec Node.js","Déployer une application full-stack en production"],googleFormUrl:"https://docs.google.com/forms/d/e/1FAIpQLSdRITrTkr72c5McbylG13wi2l0Elx3cvrh-V0OzoNt1IdPnjw/viewform?entry.hj99tb2=Web%20Full-Stack"},
+        {id:9,icon:"🎓",title:"Parcours Expert Intégral",level:"all",levelLabel:"Tous niveaux",duration:"6 mois",hours:"150h+",price:"45 000 FCFA",audience:"Tout profil, objectif carrière",image:"https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&q=80",skills:["Toutes formations","Mentorat","Portfolio","Certificat"],desc:"Le programme complet avec mentorat individuel, projets sur mesure et accompagnement jusqu'à l'emploi ou la soutenance. L'investissement ultime dans votre carrière.",curriculum:[{week:"Mois 1-2",name:"Socle fondamental",items:["Accès complet aux formations de base choisies","Programmation C ou Python selon votre parcours","Sessions mentorat hebdomadaires 1h","Plan d'apprentissage personnalisé"]},{week:"Mois 3-4",name:"Spécialisation",items:["2 formations intermédiaires selon votre objectif","Projets personnalisés sur vos besoins réels (thèse, stage, emploi)","Revues de code et corrections détaillées","Ateliers pratiques en groupe"]},{week:"Mois 5",name:"Approfondissement avancé",items:["Formation avancée au choix (ML, Simulation, Web Full-Stack)","Contribution à un projet collectif open-source","Préparation portfolio GitHub professionnel","Simulation d'entretien technique"]},{week:"Mois 6",name:"Projet capstone & Certification",items:["Projet final sur mesure présenté devant un jury","Certificat Genius Academy + recommandation personnelle","Accès à vie aux ressources et mises à jour","Intégration à la communauté alumni privée"]}],outcomes:["Maîtriser l'ensemble de la chaîne de compétences choisie","Disposer d'un portfolio GitHub complet et professionnel","Certificat + recommandation valorisables sur CV","Bénéficier d'un suivi post-formation et réseau alumni"],googleFormUrl:"https://docs.google.com/forms/d/e/1FAIpQLSdRITrTkr72c5McbylG13wi2l0Elx3cvrh-V0OzoNt1IdPnjw/viewform?entry.hj99tb2=Parcours%20Expert"}
+    ];
+
+    const badgeMap = {debutant:'badge-debut',intermediaire:'badge-inter',avance:'badge-avance',all:'badge-all'};
+
+    function renderCards(filter='all'){
+        const grid = document.getElementById('formations-grid');
+        const list = filter==='all' ? FORMATIONS : FORMATIONS.filter(f=>f.level===filter);
+        grid.innerHTML = list.map((f,i)=>`
+    <div class="formation-card" onclick="openModal(${f.id})" style="animation:fadeUp .5s ${i*.07}s ease both">
+      <div class="card-thumb">
+        <img src="${f.image}" alt="${f.title}" loading="lazy"/>
+        <span class="card-badge ${badgeMap[f.level]}">${f.levelLabel}</span>
+      </div>
+      <div class="card-body">
+        <div class="card-icon">${f.icon}</div>
+        <div class="card-title">${f.title}</div>
+        <div class="card-desc">${f.desc}</div>
+        <div class="card-skills">${f.skills.map(s=>`<span class="skill-tag">${s}</span>`).join('')}</div>
+      </div>
+      <div class="card-footer">
+        <div class="card-meta"><strong>${f.audience}</strong>${f.hours} de contenu</div>
+        <div><div class="card-price">${f.price}</div><div class="card-duration">⏱ ${f.duration}</div></div>
+      </div>
+    </div>`).join('');
+    }
+
+    document.querySelectorAll('.filter-btn').forEach(btn=>{
+        btn.addEventListener('click',()=>{
+            document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+            btn.classList.add('active');
+            renderCards(btn.dataset.filter);
+        });
+    });
+
+    function openModal(id){
+        const f = FORMATIONS.find(x=>x.id===id); if(!f) return;
+        document.getElementById('m-tag').textContent=`${f.icon}  ${f.levelLabel} · ${f.duration}`;
+        document.getElementById('m-title').textContent=f.title;
+        document.getElementById('m-desc').textContent=f.desc;
+        document.getElementById('m-price').textContent=f.price;
+        document.getElementById('m-meta').innerHTML=`
+    <div class="modal-meta-item"><span>⏱</span>${f.duration}</div>
+    <div class="modal-meta-item"><span>📚</span>${f.hours} de contenu</div>
+    <div class="modal-meta-item"><span>👥</span>${f.audience}</div>
+    <div class="modal-meta-item"><span>🏆</span>Certificat inclus</div>`;
+        document.getElementById('m-curriculum').innerHTML=f.curriculum.map(w=>`
+    <div class="week-block">
+      <div class="week-header" onclick="toggleWeek(this)">
+        <span class="week-num">${w.week}</span>
+        <span class="week-name">${w.name}</span>
+        <span class="week-chevron">▾</span>
+      </div>
+      <div class="week-content"><ul>${w.items.map(it=>`<li>${it}</li>`).join('')}</ul></div>
+    </div>`).join('');
+        const first=document.querySelector('#m-curriculum .week-block');
+        if(first) first.classList.add('open');
+        document.getElementById('m-outcomes').innerHTML=`
+    <h4>✦ À l'issue de cette formation, vous saurez :</h4>
+    <ul>${f.outcomes.map(o=>`<li>${o}</li>`).join('')}</ul>`;
+        document.getElementById('m-enroll-btn').onclick=()=>window.open(f.googleFormUrl,'_blank');
+        document.getElementById('modal-overlay').classList.add('open');
+        document.body.style.overflow='hidden';
+    }
+
+    function toggleWeek(h){ h.parentElement.classList.toggle('open'); }
+    function closeModal(){ document.getElementById('modal-overlay').classList.remove('open'); document.body.style.overflow=''; }
+    function closeModalOverlay(e){ if(e.target===document.getElementById('modal-overlay')) closeModal(); }
+    function scrollTo(id){ document.getElementById(id).scrollIntoView({behavior:'smooth'}); }
+
+    document.getElementById('hamburger').addEventListener('click',()=>{
+        document.getElementById('hamburger').classList.toggle('open');
+        document.getElementById('mobile-nav').classList.toggle('open');
+    });
+    function closeMobile(){ document.getElementById('hamburger').classList.remove('open'); document.getElementById('mobile-nav').classList.remove('open'); }
+
+    function submitForm(){
+        const prenom=document.getElementById('f-prenom').value.trim();
+        const email=document.getElementById('f-email').value.trim();
+        if(!prenom||!email){alert('Merci de renseigner votre prénom et votre e-mail.');return;}
+        const formation=document.getElementById('f-formation').value;
+        const msg=document.getElementById('f-message').value.trim();
+        const txt=encodeURIComponent(`Bonjour, je m'appelle ${prenom}.\nFormation souhaitée : ${formation||'à préciser'}${msg?'\nMessage : '+msg:''}`);
+        window.open(`https://wa.me/22870817935?text=${txt}`,'_blank');
+        document.getElementById('form-msg').classList.add('success');
+    }
+
+    /* Particles */
+    (function(){
+        const c=document.getElementById('particles-canvas'),ctx=c.getContext('2d');
+        let W,H,pts=[];
+        function resize(){W=c.width=window.innerWidth;H=c.height=window.innerHeight;}
+        resize(); window.addEventListener('resize',resize);
+        for(let i=0;i<70;i++) pts.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.35,vy:(Math.random()-.5)*.35,r:Math.random()*1.5+.5});
+        function draw(){
+            ctx.clearRect(0,0,W,H);
+            pts.forEach(p=>{
+                p.x+=p.vx;p.y+=p.vy;
+                if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;
+                ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle='rgba(240,180,41,.6)';ctx.fill();
+            });
+            for(let i=0;i<pts.length;i++) for(let j=i+1;j<pts.length;j++){
+                const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);
+                if(d<130){ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.strokeStyle=`rgba(240,180,41,${.12*(1-d/130)})`;ctx.lineWidth=.7;ctx.stroke();}
+            }
+            requestAnimationFrame(draw);
+        }
+        draw();
+    })();
+
+    renderCards();
+</script>
+</body>
+</html>

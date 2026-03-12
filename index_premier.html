@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genius Academy – Formations d'Excellence</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ink: #0c0c10;
+            --paper: #f4f1eb;
+            --paper2: #eae6dd;
+            --accent: #e8440a;
+            --accent2: #1a3af5;
+            --gold: #c9a84c;
+            --mid: #6b6860;
+            --light: #b8b4ab;
+            --white: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--paper);
+            color: var(--ink);
+            overflow-x: hidden;
+        }
+
+        /* ── NAV ─────────────────────────────────────── */
+        nav {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.2rem 5%;
+            background: var(--paper);
+            border-bottom: 1.5px solid rgba(12,12,16,0.08);
+            transition: box-shadow 0.3s;
+        }
+        nav.scrolled { box-shadow: 0 4px 30px rgba(12,12,16,0.08); }
+
+        .logo {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: -0.03em;
+            color: var(--ink);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .logo .dot { color: var(--accent); }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+        .nav-links a {
+            font-size: 0.88rem;
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--mid);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--ink); }
+
+        .nav-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--ink);
+            color: var(--paper);
+            padding: 0.65rem 1.4rem;
+            border-radius: 2px;
+            font-family: 'Syne', sans-serif;
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 0.04em;
+            cursor: pointer;
+            border: none;
+            transition: background 0.25s, transform 0.2s;
+        }
+        .nav-cta:hover { background: var(--accent); transform: translateY(-1px); }
+
+        /* ── HERO ────────────────────────────────────── */
+        .hero {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            overflow: hidden;
+        }
+
+        .hero-left {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 8rem 5% 5rem 8%;
+            position: relative;
+        }
+
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--paper2);
+            border: 1px solid rgba(12,12,16,0.12);
+            border-radius: 100px;
+            padding: 0.35rem 0.9rem;
+            font-size: 0.78rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--mid);
+            margin-bottom: 2rem;
+            width: fit-content;
+            animation: fadeUp 0.7s ease both;
+        }
+        .hero-tag .pulse {
+            width: 7px; height: 7px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%,100%{ box-shadow: 0 0 0 0 rgba(232,68,10,0.5); }
+            50%{ box-shadow: 0 0 0 6px rgba(232,68,10,0); }
+        }
+
+        .hero h1 {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: clamp(3rem, 6vw, 5.5rem);
+            line-height: 0.95;
+            letter-spacing: -0.04em;
+            color: var(--ink);
+            margin-bottom: 1.5rem;
+            animation: fadeUp 0.7s 0.1s ease both;
+        }
+        .hero h1 em {
+            font-style: normal;
+            color: var(--accent);
+        }
+        .hero h1 .line2 {
+            display: block;
+            color: var(--mid);
+            font-weight: 400;
+            font-size: 0.55em;
+            letter-spacing: -0.01em;
+            margin-top: 0.3em;
+        }
+
+        .hero-desc {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--mid);
+            max-width: 440px;
+            margin-bottom: 2.5rem;
+            animation: fadeUp 0.7s 0.2s ease both;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            animation: fadeUp 0.7s 0.3s ease both;
+        }
+
+        .btn-main {
+            background: var(--accent);
+            color: var(--white);
+            border: none;
+            padding: 1rem 2rem;
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 0.03em;
+            border-radius: 2px;
+            cursor: pointer;
+            transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
+        }
+        .btn-main:hover {
+            background: #c73608;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(232,68,10,0.3);
+        }
+
+        .btn-ghost {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--mid);
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .btn-ghost:hover { color: var(--ink); }
+        .btn-ghost .arrow { transition: transform 0.2s; }
+        .btn-ghost:hover .arrow { transform: translateX(4px); }
+
+        .hero-stats {
+            display: flex;
+            gap: 2.5rem;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(12,12,16,0.1);
+            animation: fadeUp 0.7s 0.4s ease both;
+        }
+        .stat-item {}
+        .stat-num {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 2rem;
+            color: var(--ink);
+            letter-spacing: -0.04em;
+        }
+        .stat-num span { color: var(--accent); }
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--mid);
+            margin-top: 0.2rem;
+        }
+
+        .hero-right {
+            position: relative;
+            background: var(--ink);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .hero-right::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&q=80') center/cover;
+            opacity: 0.25;
+        }
+        .hero-right-inner {
+            position: relative;
+            z-index: 2;
+            padding: 3rem;
+            text-align: center;
+        }
+        .hero-badge {
+            font-family: 'Syne', sans-serif;
+            font-size: 8rem;
+            font-weight: 800;
+            color: var(--paper);
+            opacity: 0.04;
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            white-space: nowrap;
+            letter-spacing: -0.05em;
+            user-select: none;
+        }
+        .floating-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            max-width: 320px;
+            position: relative;
+            z-index: 3;
+        }
+        .f-card {
+            background: rgba(244,241,235,0.08);
+            border: 1px solid rgba(244,241,235,0.12);
+            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            padding: 1.2rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            animation: floatCard 3s ease-in-out infinite;
+        }
+        .f-card:nth-child(2) { animation-delay: 0.5s; margin-left: 2rem; }
+        .f-card:nth-child(3) { animation-delay: 1s; }
+        @keyframes floatCard {
+            0%,100%{ transform: translateY(0); }
+            50%{ transform: translateY(-8px); }
+        }
+        .f-card-icon {
+            font-size: 2rem;
+            width: 50px; height: 50px;
+            background: rgba(244,241,235,0.1);
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        .f-card-text { text-align: left; }
+        .f-card-title {
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--paper);
+        }
+        .f-card-sub {
+            font-size: 0.78rem;
+            color: rgba(244,241,235,0.5);
+            margin-top: 0.2rem;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── SECTION LABEL ───────────────────────────── */
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        .section-label::before {
+            content: '';
+            width: 24px;
+            height: 2px;
+            background: var(--accent);
+        }
+
+        /* ── FORMATIONS ──────────────────────────────── */
+        #formations {
+            padding: 7rem 5%;
+            background: var(--paper);
+        }
+
+        .formations-header {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: end;
+            margin-bottom: 5rem;
+        }
+        .formations-header h2 {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: clamp(2.2rem, 4vw, 3.5rem);
+            letter-spacing: -0.04em;
+            line-height: 1;
+            color: var(--ink);
+        }
+        .formations-header h2 span { color: var(--accent); }
+        .formations-header p {
+            color: var(--mid);
+            font-size: 1rem;
+            line-height: 1.7;
+            max-width: 400px;
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+        .filter-btn {
+            padding: 0.45rem 1.1rem;
+            border-radius: 100px;
+            border: 1.5px solid rgba(12,12,16,0.15);
+            background: none;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--mid);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--ink);
+            border-color: var(--ink);
+            color: var(--paper);
+        }
+
+        .formations-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5px;
+            background: rgba(12,12,16,0.12);
+            border: 1.5px solid rgba(12,12,16,0.12);
+        }
+
+        .formation-card {
+            background: var(--paper);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            transition: background 0.25s;
+            position: relative;
+            overflow: hidden;
+        }
+        .formation-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 3px; height: 0;
+            background: var(--accent);
+            transition: height 0.3s ease;
+        }
+        .formation-card:hover::before { height: 100%; }
+        .formation-card:hover { background: var(--paper2); }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+        .card-emoji {
+            font-size: 2.2rem;
+            line-height: 1;
+        }
+        .card-level {
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--mid);
+            background: var(--paper2);
+            padding: 0.3rem 0.7rem;
+            border-radius: 100px;
+        }
+
+        .card-title {
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: -0.02em;
+            color: var(--ink);
+            margin-bottom: 0.8rem;
+            line-height: 1.2;
+        }
+        .card-desc {
+            font-size: 0.87rem;
+            color: var(--mid);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .card-modules {
+            list-style: none;
+            margin-bottom: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+        .card-modules li {
+            font-size: 0.82rem;
+            color: var(--mid);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+        .card-modules li::before {
+            content: '→';
+            color: var(--accent);
+            flex-shrink: 0;
+            font-weight: 700;
+        }
+
+        .card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 1.2rem;
+            border-top: 1px solid rgba(12,12,16,0.1);
+            margin-top: auto;
+        }
+        .card-price {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 1.4rem;
+            letter-spacing: -0.03em;
+            color: var(--ink);
+        }
+        .card-duration {
+            font-size: 0.78rem;
+            color: var(--light);
+        }
+
+        .card-enroll {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: var(--ink);
+            color: var(--paper);
+            border: none;
+            padding: 0.6rem 1.2rem;
+            font-family: 'Syne', sans-serif;
+            font-weight: 600;
+            font-size: 0.8rem;
+            border-radius: 2px;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .card-enroll:hover { background: var(--accent); transform: translateY(-1px); }
+
+        /* Featured card */
+        .formation-card.featured {
+            background: var(--ink);
+            grid-column: span 1;
+        }
+        .formation-card.featured::before { background: var(--gold); }
+        .formation-card.featured:hover { background: #161620; }
+        .formation-card.featured .card-title { color: var(--paper); }
+        .formation-card.featured .card-desc { color: rgba(244,241,235,0.5); }
+        .formation-card.featured .card-modules li { color: rgba(244,241,235,0.6); }
+        .formation-card.featured .card-level { background: rgba(244,241,235,0.08); color: rgba(244,241,235,0.6); }
+        .formation-card.featured .card-footer { border-top-color: rgba(244,241,235,0.1); }
+        .formation-card.featured .card-price { color: var(--gold); }
+        .formation-card.featured .card-duration { color: rgba(244,241,235,0.3); }
+        .formation-card.featured .card-enroll {
+            background: var(--gold);
+            color: var(--ink);
+        }
+        .formation-card.featured .card-enroll:hover { background: #e8c360; }
+
+        /* ── CONTACT ─────────────────────────────────── */
+        #contact {
+            padding: 7rem 5%;
+            background: var(--ink);
+            position: relative;
+            overflow: hidden;
+        }
+        #contact::before {
+            content: 'CONTACT';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Syne', sans-serif;
+            font-size: 20rem;
+            font-weight: 800;
+            color: rgba(244,241,235,0.02);
+            white-space: nowrap;
+            letter-spacing: -0.05em;
+            pointer-events: none;
+        }
+
+        .contact-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        .contact-inner .section-label { color: var(--gold); }
+        .contact-inner .section-label::before { background: var(--gold); }
+        .contact-inner h2 {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            letter-spacing: -0.04em;
+            color: var(--paper);
+            line-height: 1;
+            margin-bottom: 1.5rem;
+        }
+        .contact-inner h2 em { font-style: normal; color: var(--gold); }
+        .contact-inner > p {
+            font-size: 1.1rem;
+            color: rgba(244,241,235,0.5);
+            margin-bottom: 4rem;
+            max-width: 480px;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1px;
+            background: rgba(244,241,235,0.1);
+            border: 1px solid rgba(244,241,235,0.1);
+            margin-bottom: 3rem;
+        }
+        .contact-item {
+            padding: 2rem 2.5rem;
+            background: var(--ink);
+            display: flex;
+            align-items: flex-start;
+            gap: 1.2rem;
+            transition: background 0.25s;
+        }
+        .contact-item:hover { background: #161620; }
+        .contact-icon {
+            width: 44px; height: 44px;
+            background: rgba(244,241,235,0.06);
+            border-radius: 4px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+        .contact-text h4 {
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: rgba(244,241,235,0.4);
+            margin-bottom: 0.3rem;
+        }
+        .contact-text p {
+            font-size: 0.98rem;
+            color: var(--paper);
+            font-weight: 400;
+        }
+
+        .social-row {
+            display: flex;
+            gap: 0.8rem;
+        }
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.7rem 1.4rem;
+            border: 1.5px solid rgba(244,241,235,0.15);
+            border-radius: 2px;
+            color: rgba(244,241,235,0.7);
+            text-decoration: none;
+            font-family: 'Syne', sans-serif;
+            font-weight: 600;
+            font-size: 0.82rem;
+            letter-spacing: 0.03em;
+            transition: all 0.25s;
+            cursor: pointer;
+            background: none;
+        }
+        .social-btn:hover {
+            background: rgba(244,241,235,0.06);
+            border-color: rgba(244,241,235,0.4);
+            color: var(--paper);
+        }
+        .social-btn.whatsapp:hover {
+            background: rgba(37,211,102,0.1);
+            border-color: rgba(37,211,102,0.5);
+            color: #25d366;
+        }
+
+        /* ── FOOTER ──────────────────────────────────── */
+        footer {
+            background: #08080c;
+            padding: 2rem 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid rgba(244,241,235,0.06);
+        }
+        footer .logo { color: var(--paper); }
+        footer p {
+            font-size: 0.8rem;
+            color: rgba(244,241,235,0.25);
+        }
+
+        /* ── RESPONSIVE ──────────────────────────────── */
+        @media (max-width: 1024px) {
+            .formations-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .hero { grid-template-columns: 1fr; }
+            .hero-right { display: none; }
+            .hero-left { padding: 7rem 5% 4rem; }
+            .formations-header { grid-template-columns: 1fr; }
+            .formations-grid { grid-template-columns: 1fr; }
+            .contact-grid { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+            footer { flex-direction: column; gap: 1rem; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+    <a class="logo" href="#home">Genius<span class="dot">.</span>Academy</a>
+    <ul class="nav-links">
+        <li><a href="#home">Accueil</a></li>
+        <li><a href="#formations">Formations</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="nav-cta" onclick="document.getElementById('formations').scrollIntoView({behavior:'smooth'})">
+        Voir les formations →
+    </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+    <div class="hero-left">
+        <div class="hero-tag">
+            <span class="pulse"></span>
+            Inscriptions ouvertes — Kara, Togo
+        </div>
+        <h1>
+            Maîtrisez<br>
+            <em>l'informatique</em>
+            <span class="line2">du code à l'intelligence artificielle</span>
+        </h1>
+        <p class="hero-desc">
+            Des formations pratiques et intensives pour étudiants et professionnels.
+            Apprenez Python, le développement web, la data science et plus encore.
+        </p>
+        <div class="hero-actions">
+            <button class="btn-main" onclick="document.getElementById('formations').scrollIntoView({behavior:'smooth'})">
+                Découvrir les formations
+            </button>
+            <button class="btn-ghost" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+                Nous contacter <span class="arrow">→</span>
+            </button>
+        </div>
+        <div class="hero-stats">
+            <div class="stat-item">
+                <div class="stat-num">9<span>+</span></div>
+                <div class="stat-label">Formations disponibles</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num">150<span>h</span></div>
+                <div class="stat-label">de contenu pédagogique</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num">25k<span>+</span></div>
+                <div class="stat-label">FCFA à partir de</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="hero-right">
+        <div class="hero-badge">GA</div>
+        <div class="hero-right-inner">
+            <div class="floating-cards">
+                <div class="f-card">
+                    <div class="f-card-icon">🐍</div>
+                    <div class="f-card-text">
+                        <div class="f-card-title">Python Scientifique</div>
+                        <div class="f-card-sub">Débutant · 6 semaines</div>
+                    </div>
+                </div>
+                <div class="f-card">
+                    <div class="f-card-icon">🤖</div>
+                    <div class="f-card-text">
+                        <div class="f-card-title">Machine Learning</div>
+                        <div class="f-card-sub">Avancé · 12 semaines</div>
+                    </div>
+                </div>
+                <div class="f-card">
+                    <div class="f-card-icon">🌐</div>
+                    <div class="f-card-text">
+                        <div class="f-card-title">Développement Web</div>
+                        <div class="f-card-sub">Intermédiaire · 12 semaines</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FORMATIONS -->
+<section id="formations">
+    <div class="formations-header">
+        <div>
+            <span class="section-label">Catalogue</span>
+            <h2>Nos <span>9</span> formations<br>d'excellence</h2>
+        </div>
+        <p>Des parcours structurés par niveau, du débutant complet à l'expert. Chaque formation combine théorie et projets concrets.</p>
+    </div>
+
+    <div class="filter-tabs">
+        <button class="filter-btn active" onclick="filterCards('all', this)">Tout voir</button>
+        <button class="filter-btn" onclick="filterCards('debutant', this)">Débutant</button>
+        <button class="filter-btn" onclick="filterCards('intermediaire', this)">Intermédiaire</button>
+        <button class="filter-btn" onclick="filterCards('avance', this)">Avancé</button>
+    </div>
+
+    <div class="formations-grid" id="formationsGrid">
+
+        <!-- Python Scientifique -->
+        <div class="formation-card" data-level="debutant">
+            <div class="card-header">
+                <div class="card-emoji">🐍</div>
+                <span class="card-level">Débutant</span>
+            </div>
+            <div class="card-title">Python Scientifique – Bases</div>
+            <div class="card-desc">Formation fondamentale pour débuter en Python avec une approche scientifique. Idéal pour L1–L2.</div>
+            <ul class="card-modules">
+                <li>Environnement scientifique et syntaxe Python</li>
+                <li>Variables, types, structures de contrôle</li>
+                <li>Introduction à NumPy et Matplotlib</li>
+                <li>Exercices appliqués et projets</li>
+            </ul>
+            <div class="card-footer">
+                <div>
+                    <div class="card-price">25 000 FCFA</div>
+                    <div class="card-duration">⏱ 6 semaines</div>
+                </div>
+                <button class="card-enroll" onclick="openEnrollForm('Python Scientifique – Bases')">S'inscrire →</button>
+            </div>
+        </div>
+
+        <!-- Bureautique -->
+        <div class="formation-card" data-level="debutant">
+            <div class="card-header">
+                <div class="card-emoji">💼</div>
+                <span class="card-level">Débutant</span>
+            </div>
+            <div class="card-title">Pack Bureautique Pro</div>
+            <div class="card-desc">Maîtrisez Word, Excel, PowerPoint et Google Workspace. Outils essentiels de la bureautique moderne.</div>
+            <ul class="card-modules">
+                <li>Microsoft Word : documents professionnels</li>
+                <li>Excel : formules, tableaux croisés, graphiques</li>
+                <li>PowerPoint : présentations percutantes</li>
+                <li>Automatisation avec macros VBA</li>
+            </ul>
+            <div class="card-footer">
+                <div>
+                    <div class="card-price">25 000 FCFA</div>
+                    <div class="card-duration">⏱ 6 semaines</div>
+                </div>
+                <button class="card-enroll" onclick="openEnrollForm('Pack Bureautique Pro')">S'inscrire →</button>
+            </div>
+        </div>
+
+        <!-- Langage C -->
+        <div class="formation-card" data-level="debutant intermediaire">
+            <div class="card-header">
+                <div class="card-emoji">⚙️</div>
+                <span class="card-level">Déb.–Inter.</span>
+            </div>
+            <div class="card-title">Initiation au Langage C</div>
+            <div class="card-desc">Les fondamentaux de la programmation avec le C. Base essentielle pour tout développeur sérieux.</div>
+            <ul class="card-modules">
+                <li>Variables, pointeurs, structures</li>
+                <li>Gestion de la mémoire dynamique</li>
+                <li>Structures de données (listes, piles, files)</li>
+                <li>Manipulation de fichiers et debugging</li>
+            </ul>
+            <div class="card-footer">
+                <div>
+                    <div class="card-price">28 000 FCFA</div>
+                    <div class="card-duration">⏱ 8 semaines</div>
+                </div>
+                <button class="card-enroll" onclick="openEnrollForm('Initiation au Langage C')">S'inscrire →</button>
+            </div>
+        </div>
+
+        <!-- Analyse de Données -->
+        <div class="formation-card" data-level="intermediaire">
+            <div class="card-header">
+                <div class="card-emoji">📊</div>
+                <span class="card-level">Intermédiaire</span>
+            </div>
+            <div class="card-title">Analyse de Données Scientifiques</div>
+            <div class="card-desc">Traitez, nettoyez et visualisez vos données expérimentales comme un professionnel. Pour L3–M1.</div>
+            <ul class="card-modules">
+                <li>Pandas : manipulation de données tabulaires</li>
+                <li>Nettoyage et préparation des données</li>
+                <li>Statistiques exploratoires et tests</li>
+                <li>Visualisations avancées</li>
+            </ul>
+            <div class="card-footer">
+                <div>
+                    <div class="card-price">30 000 FCFA</div>
+                    <div class="card-duration">⏱ 8 semaines</div>
+                </div>
+                <button class="card-enroll" onclick="openEnrollForm('Analyse de Données Scientifiques')">S'inscrire →</button>
+            </div>
+        </div>
+
+        <!-- Automatisation -->
+        <div class="formation-card" data-level="intermediaire">
+            <div class="card-header">
+                <div class="card-emoji">⚡</div>
+                <span class="card-level">Intermédiaire</span>
+            </div>
+            <div class="card-title">Automatisation Labo & Recherche</div>
+            <div class="card-desc">Automatisez vos tâches répétitives : traitement de données, génération de rapports, pipelines d'analyse.</div>
+            <ul class="card-modules">
+                <li>Scripts Python pour automatisation</li>
+                <li>Génération automatique de rapports</li>
+                <li>Scraping de bases de données scientifiques</li>
+                <li>Intégration Excel et outils de labo</li>
+            </ul>
+            <div class="card-footer">
+                <div>
+                    <div class="card-price">32 000 FCFA</div>
+                    <div class="card-duration">⏱ 8 semaines</div>
+                </div>
+                <button class="card-enroll" onclick="openEnrollForm('Automatisation Labo & Recherche')">S'inscrire →</button>
+            </div>
+        </div>
+
+        <!-- Développement Web -->
+        <div class="formation-card" data-level="intermediaire">
+            <div class="card-header">
+                <div class="card-emoji">🌐</div>
+                <span class="card-level">Intermédiaire</span>
+            </div>
+            <div class="card-title">Développement Web Fullstack</div>
+            <div class="card-desc">Créez des sites modernes et interactifs. Du front-end au back-end, devenez développeur web complet.</div>
+            <ul class="card-modules">
+                <li>HTML5, CSS3 et design responsive</li>
+                <li>JavaScript ES6+ et React</li>
+                <li>Node.js et bases de données</li>
+                <li>Déploiement et hébergement</li>
+            </ul>
+            <div class="card-footer">
+                <div>
+                    <div class="card-price">38 000 FCFA</div>
+                    <div class="card-duration">⏱ 12 semaines</div>
+                </div>
+                <button class="card-enroll" onclick="openEnrollForm('Développement Web Fullstack')">S'inscrire →</button>
+            </div>
+        </div>
+
+        <!-- Modélisation -->
+        <div class="formation-card" data-level="avance">
+            <div class="card-header">
+                <div class="card-emoji">🔬</div>
+                <span class="card-level">Avancé</span>
+            </div>
+            <div class="card-title">Modélisation & Simulation</div>
+            <div class="card-desc">Simulez des phénomènes physiques et résolvez des équations complexes. Pour M1–M2 et doctorants.</div>
+            <ul class="card-modules">
+                <li>SciPy : équations différentielles</li>
+                <li>Modélisation de systèmes dynamiques</li>
+                <li>Simulations Monte Carlo</li>
+                <li>Projet : simulation d'un système physique</li>
+            </ul>
+            <div class="card-footer">
+                <div>
+                    <div class="card-price">35 000 FCFA</div>
+                    <div class="card-duration">⏱ 10 semaines</div>
+                </div>
+                <button class="card-enroll" onclick="openEnrollForm('Modélisation & Simulation')">S'inscrire →</button>
+            </div>
+        </div>
+
+        <!-- Machine Learning -->
+        <div class="formation-card" data-level="avance">
+            <div class="card-header">
+                <div class="card-emoji">🤖</div>
+                <span class="card-level">Avancé</span>
+            </div>
+            <div class="card-title">Machine Learning pour Sciences</div>
+            <div class="card-desc">Exploitez l'IA pour analyser vos données scientifiques. Prédictions, classifications et découvertes assistées.</div>
+            <ul class="card-modules">
+                <li>Introduction au Machine Learning</li>
+                <li>Scikit-learn : régression, classification</li>
+                <li>Réseaux de neurones avec TensorFlow</li>
+                <li>Applications scientifiques concrètes</li>
+            </ul>
+            <div class="card-footer">
+                <div>
+                    <div class="card-price">40 000 FCFA</div>
+                    <div class="card-duration">⏱ 12 semaines</div>
+                </div>
+                <button class="card-enroll" onclick="openEnrollForm('Machine Learning pour Sciences')">S'inscrire →</button>
+            </div>
+        </div>
+
+        <!-- Parcours Expert — featured -->
+        <div class="formation-card featured" data-level="all">
+            <div class="card-header">
+                <div class="card-emoji">🎓</div>
+                <span class="card-level">Tous niveaux</span>
+            </div>
+            <div class="card-title">Parcours Complet – Expert</div>
+            <div class="card-desc">Le programme ultime : de zéro à expert avec mentorat personnalisé, projets sur mesure et certificat reconnu.</div>
+            <ul class="card-modules">
+                <li>Accès à toutes les formations (150h+)</li>
+                <li>Mentorat individuel hebdomadaire</li>
+                <li>Projets personnalisés sur mesure</li>
+                <li>Portfolio GitHub professionnel</li>
+                <li>Certificat reconnu + recommandation</li>
+                <li>Accès à vie et communauté privée</li>
+            </ul>
+            <div class="card-footer">
+                <div>
+                    <div class="card-price">45 000 FCFA</div>
+                    <div class="card-duration">⏱ 6 mois</div>
+                </div>
+                <button class="card-enroll" onclick="openEnrollForm('Parcours Complet – Expert')">S'inscrire →</button>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+    <div class="contact-inner">
+        <span class="section-label">Contact</span>
+        <h2>Prêt à<br><em>commencer ?</em></h2>
+        <p>Une question sur une formation ? Contactez-nous directement. Nous répondons dans les 24h.</p>
+
+        <div class="contact-grid">
+            <div class="contact-item">
+                <div class="contact-icon">📧</div>
+                <div class="contact-text">
+                    <h4>Email</h4>
+                    <p>Barry.StarLabs.Allen@gmail.com</p>
+                </div>
+            </div>
+            <div class="contact-item">
+                <div class="contact-icon">📱</div>
+                <div class="contact-text">
+                    <h4>Téléphone</h4>
+                    <p>+228 70 81 79 35</p>
+                </div>
+            </div>
+            <div class="contact-item">
+                <div class="contact-icon">📍</div>
+                <div class="contact-text">
+                    <h4>Localisation</h4>
+                    <p>Kara, Togo</p>
+                </div>
+            </div>
+            <div class="contact-item">
+                <div class="contact-icon">🕐</div>
+                <div class="contact-text">
+                    <h4>Disponibilité</h4>
+                    <p>Lun–Sam · 8h00 – 18h00</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="social-row">
+            <a class="social-btn whatsapp" href="https://wa.me/22870817935?text=Bonjour,%20je%20souhaite%20entrer%20en%20contact%20!" target="_blank">
+                💬 WhatsApp
+            </a>
+            <a class="social-btn" href="#" target="_blank">
+                f Facebook
+            </a>
+            <a class="social-btn" href="#" target="_blank">
+                𝕏 Twitter
+            </a>
+            <a class="social-btn" href="#" target="_blank">
+                in LinkedIn
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <a class="logo" href="#home" style="color: rgba(244,241,235,0.6);">Genius<span class="dot">.</span>Academy</a>
+    <p>© 2025 Genius Academy – Kara, Togo. Tous droits réservés.</p>
+</footer>
+
+<script>
+    const GOOGLE_FORM_BASE_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSdRITrTkr72c5McbylG13wi2l0Elx3cvrh-V0OzoNt1IdPnjw/viewform';
+    const FORM_FIELD_IDS = { formation: 'entry.hj99tb2' };
+
+    function openEnrollForm(name) {
+        const url = `${GOOGLE_FORM_BASE_URL}?${FORM_FIELD_IDS.formation}=${encodeURIComponent(name)}`;
+        window.open(url, '_blank');
+    }
+
+    // Nav scroll effect
+    window.addEventListener('scroll', () => {
+        document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    // Filter tabs
+    function filterCards(level, btn) {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('.formation-card').forEach(card => {
+            const lvl = card.dataset.level || '';
+            const show = level === 'all' || lvl.includes(level);
+            card.style.display = show ? 'flex' : 'none';
+        });
+    }
+
+    // Scroll reveal
+    const io = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.style.opacity = '1';
+                e.target.style.transform = 'translateY(0)';
+                io.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.08 });
+
+    document.querySelectorAll('.formation-card, .contact-item').forEach((el, i) => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(24px)';
+        el.style.transition = `opacity 0.5s ${i * 0.06}s ease, transform 0.5s ${i * 0.06}s ease`;
+        io.observe(el);
+    });
+</script>
+</body>
+</html>
